@@ -4,11 +4,13 @@
 #include "ac3.h"
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <algorithm>
 
 /**
  * @brief     read in the variables then the edges
  */
-istream& AC3::operator>>(istream& in) {
+std::istream& AC3::operator>>(std::istream& in) {
 
 }
 
@@ -31,7 +33,7 @@ void AC3::read_edges(std::istream& in) {
 /**
  * @brief     print all the variables
  */
-ostream& AC3::operator<<(ostream& out) {
+std::ostream& AC3::operator<<(std::ostream& out) {
 
 }
 
@@ -47,7 +49,55 @@ void AC3::print_vars(std::ostream& out) {
  * @brief     uses all the power under the sun to solve the problem
  */
 bool AC3::solve() {
+  std::queue<Edge> q;
 
+  //fill in queue with initial arcs
+  for (auto var = vars.begin(); var != vars.end(); ++var) {
+    for (auto edge = var->connections.begin(); edge != var->connections.end(); ++edge) {
+      q.push(*edge);
+    }
+  }
+
+  while (!q.empty()) {
+    Edge edge = q.front();
+    q.pop();
+
+    int oldDomainSize = edge.left->value == -1 ? (int) edge.left->domain.size() : 1;
+
+    //restrict domain of edge.left based on edge.right
+    if (oldDomainSize == 1) {
+      auto it = std::find(edge.left->domain.begin(), edge.left->domain.end(), edge.right->value);
+      //if left's domain contains edge.right->value, then remove from left's domain
+      if (it != edge.left->domain.end()) {
+        edge.left->domain.erase(it);
+      }
+
+      if ((int) edge.left->domain.size() == 1)
+        edge.left->value = edge.left->domain[0];
+    }
+
+    int newDomainSize = edge.left->value == -1 ? (int) edge.left->domain.size() : 1;
+
+    if (newDomainSize == 0)
+      return false;
+
+    //if domain size of x decreased then add relavent edges to q
+    if (newDomainSize < oldDomainSize) {
+      for (int i = 0; i < (int) edge.left->connections.size(); ++i) {
+        Variable * neighbor = edge.left->connections[i].right;
+
+        if (neighbor != edge.right) {
+          Edge newEdge;
+          newEdge.left = neighbor;
+          newEdge.right = edge.left;
+          
+          q.push(newEdge);
+        }
+      }
+    }
+  }
+
+  return true;
 }
 
 /**
