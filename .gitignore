@@ -1,3 +1,9 @@
+# c++ object files
+*.o
+
+# AI executables
+AC3
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

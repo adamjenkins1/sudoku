@@ -35,13 +35,14 @@ class AC3 {
       // vector of edges connecting to other variables
       std::vector<Edge> connections;
       // the possible values of this variable
-      vector<int> domain;
+      std::vector<int> domain;
       // the value of this variable
       // (if this is set then domain should be ignored)
       int value = -1;
+      int domain_size();
     };
     // vector of all variables (variables contain the edges)
-    vector<Variable> vars;
+    std::vector<Variable> vars;
     // whether all variables have a value
     bool solved = false;
     // evaluates an edge to make 
