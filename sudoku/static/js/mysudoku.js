@@ -32,4 +32,6 @@ function tryGeneratingBoard() {
   return true;
 }
 
+// add ability to select board size. currently hard coded
+//console.log(a);
 retryForever(tryGeneratingBoard)
