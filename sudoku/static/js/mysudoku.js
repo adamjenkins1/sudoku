@@ -1,22 +1,35 @@
-var board = [
-  , , ,4, ,8, ,2,9
-  , , , , , , , , ,4
-  ,8,5, , ,2, , , ,7
-  , , ,8,3,7,4,2, ,
-  , ,2, , , , , , ,
-  , , ,3,2,6,1,7, ,
-  , , , , ,9,3,6,1,2
-  ,2, , , , , ,4, ,3
-  ,1,3, ,6,4,2, ,7,undefined
-]
-var mySudokuJS = $("#sudoku").sudokuJS({
-  board: board
-  //difficulty: "medium"
-});
+function retryForever(fn) {
+  try {
+    var val = fn();
+    if(val == true) {
+      $('#loading').slideUp();
+      $('#solveButton').show();
+      return;
+    }
+  } catch (err) {
+    console.log('retry...');
+    return retryForever(fn);
+  }
+}
 
-//mySudokuJS.setBoard(board);
+function tryGeneratingBoard() {
+  var size = 9;
+  var mySudokuJS = $("#sudoku").sudokuJS({
+    boardSize: size,
+    difficulty: "medium"
+  });
 
-$('#solve').on('click', function () {
-  mySudokuJS.solveAll();
-});
+  $('#solve').on('click', function() {
+    var board = mySudokuJS.getBoard();
+    var arrayBoard = board.map(function(obj) {
+      return obj.val;
+    });
+    console.log(board);
+    console.log(arrayBoard);
+    mySudokuJS.solveAll();
+    console.log(mySudokuJS);
+  });
+  return true;
+}
 
+retryForever(tryGeneratingBoard)

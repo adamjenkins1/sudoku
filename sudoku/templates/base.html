@@ -9,6 +9,29 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Sudoku Solver</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            {% if selected == 'home' %}
+            <li class="active"><a href="/">Home</a></li>
+            {% else %}
+            <li><a href="/">Home</a></li>
+            {% endif %}
+
+            {% if selected == 'about' %}
+            <li class="active"><a href="/about">About</a></li>
+            {% else %}
+            <li><a href="/about">About</a></li>
+            {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
     {% block content %}{% endblock %}
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
