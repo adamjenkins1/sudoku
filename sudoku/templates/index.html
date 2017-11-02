@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Sudoku Solver</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="container" style="padding-top: 50px">
+  <div id='sudoku' class="sudoku-board"></div>
+  <button type="button" class="button btn-primary btn-lg" id='solve'>Solve</button>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/sudokuJS.js' %}"></script>
+<script src="{% static 'js/mysudoku.js' %}"></script>
+{% endblock %}
