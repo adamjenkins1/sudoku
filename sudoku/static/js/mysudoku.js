@@ -29,10 +29,12 @@ function tryGeneratingBoard() {
     error = true;
     errorMsg += "Invalid difficulty: " + diff + ". Defaulting to medium.\n";
     diff = "medium";
+    shortDiff = "m";
   }
   
   if(error == true) {
     alert(errorMsg);
+    $(location).attr('href', '/' + size + '/' + shortDiff + '/'); 
   }
 
   var mySudokuJS = $("#sudoku").sudokuJS({
