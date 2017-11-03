@@ -11,6 +11,8 @@
 
 class AC3 {
   public:
+    AC3();
+    AC3(int);
     // read in all possible variables
     std::istream& operator>>(std::istream&);
     // read in the variables (does the first half of the extraction operator)
@@ -41,6 +43,8 @@ class AC3 {
       int value = -1;
       int domain_size();
     };
+    // the size of the sudoku board
+    int size;
     // vector of all variables (variables contain the edges)
     std::vector<Variable> vars;
     // whether all variables have a value

@@ -8,6 +8,19 @@
 #include <algorithm>
 
 /**
+ * @brief     default constructor
+ */
+AC3::AC3()
+  : AC3(9) {}
+
+/**
+ * @brief     Constructor
+ * @param     size:       the size of the board
+*/
+AC3::AC3(int size)
+  : size(size) {}
+
+/**
  * @brief     returns the size of the variable's domain or 1 if value is set
 */
 int AC3::Variable::domain_size() {

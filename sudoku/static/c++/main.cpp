@@ -6,5 +6,11 @@
 #include <fstream>
 
 int main(int argc, char **argv) {
-  AC3 solver;
+  if (argc != 3) {
+    std::cerr << "usage: solver <size> <filename>" << std::endl;
+  }
+  std::string filename = argv[2];
+  int size = atoi(argv[1]);
+  std::ifstream in(filename);
+  AC3 solver(size);
 }
