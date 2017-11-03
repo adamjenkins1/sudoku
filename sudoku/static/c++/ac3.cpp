@@ -21,22 +21,42 @@ AC3::AC3()
 AC3::AC3(int size)
   : size(size)
   , vars(size*size, size) {
-  for (unsigned int i = 0; i < vars.size(); ++i) {
-    
+  for (int row = 0; row < size; ++row) {
+    for (int col = 0; col < size; ++col) {
+      Variable &var = vars[row*size+col];
+      std::vector<Edge> &cons = var.connections;
+      int sqrt_size = std::sqrt(size);
+      int block_row = row/sqrt_size, block_col = col/sqrt_size;
+      for (int row1 = 0; row1 < size; ++row1) {
+        for (int col1 = 0; col1 < size; ++col1) {
+          if (row == row1 && col == col1);
+          else if (block_row == row1/sqrt_size && block_col == col1/sqrt_size) {
+            cons.emplace_back();
+            (*cons.rbegin()).left = &var;
+            (*cons.rbegin()).right = &vars[row1*size+col1];
+          }
+          else if (row == row1) {
+            cons.emplace_back();
+            (*cons.rbegin()).left = &var;
+            (*cons.rbegin()).right = &vars[row1*size+col1];
+          }
+          else if (col == col1) {
+            cons.emplace_back();
+            (*cons.rbegin()).left = &var;
+            (*cons.rbegin()).right = &vars[row1*size+col1];
+          }
+        }
+      }
+    }
   }
-  //TODO
-  // Fill constraints here for each var. There should be twenty,
-  // 8 in the current box and 6 for row and column each
 }
 
 /**
  * @brief     Variable consturctor
  */
-AC3::Variable::Variable(int size)
-  : connections(2*(size-std::sqrt(size))+(size-1))
-  , domain(size) {
-  for (int i = 1; i < size-1; ++i) {
-    domain[i-1] = i;
+AC3::Variable::Variable(int size) {
+  for (int i = 1; i <=size; ++i) {
+    domain.push_back(i);
   }
 }
 
@@ -50,8 +70,8 @@ int AC3::Variable::domain_size() const {
 /**
  * @brief     read in the variables then the edges
  */
-std::istream& AC3::operator>>(std::istream& in) {
-  read_vars(in);
+std::istream& operator>>(std::istream& in, AC3& ob) {
+  ob.read_vars(in);
   return in;
 }
 
@@ -87,6 +107,7 @@ void AC3::print_vars(std::ostream& out) const {
     else
       out << "- ";
   }
+  out << "\n";
 }
 
 /**

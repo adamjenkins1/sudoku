@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
   int size = atoi(argv[1]);
   std::ifstream in(filename);
   AC3 solver(size);
+  in >> solver;
   solver.solve();
   std::cout << solver;
 }

@@ -14,7 +14,7 @@ class AC3 {
     AC3();
     AC3(int);
     // read in all possible variables
-    std::istream& operator>>(std::istream&);
+    friend std::istream& operator>>(std::istream&, AC3&);
     // read in the variables
     void read_vars(std::istream&);
     // output all variables
