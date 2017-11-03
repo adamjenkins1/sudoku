@@ -19,7 +19,8 @@
 
 {% block scripts %}
 <script>
-  var a = "{{selected}}";
+  var size = {{boardSize}};
+  var diff = "{{difficulty}}";
 </script>
 <script src="{% static 'js/sudokuJS.js' %}"></script>
 <script src="{% static 'js/mysudoku.js' %}"></script>

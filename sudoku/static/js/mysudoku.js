@@ -16,10 +16,28 @@ function retryForever(fn) {
 function tryGeneratingBoard() {
   // size = {4, 9, 16}
   // difficulty = {"easy", "medium", "hard", "very hard"}
-  var size = 16;
+  error = false;
+  errorMsg = "\n";
+  if(!(size == 4 || size == 9 || size == 16)) {
+    error = true;
+    errorMsg += "Invalid board size: " + size + ". Defaulting to size 9.\n";
+    size = 9;
+  }
+  
+  if(!(diff == "easy" || diff == "medium" || diff == "hard" 
+        || diff == "very hard")) {
+    error = true;
+    errorMsg += "Invalid difficulty: " + diff + ". Defaulting to medium.\n";
+    diff = "medium";
+  }
+  
+  if(error == true) {
+    alert(errorMsg);
+  }
+
   var mySudokuJS = $("#sudoku").sudokuJS({
     boardSize: size,
-    difficulty: "very hard"
+    difficulty: diff
   });
 
   $('#solve').on('click', function() {
@@ -42,6 +60,4 @@ function tryGeneratingBoard() {
   return true;
 }
 
-// add ability to select board size. currently hard coded
-//console.log(a);
 retryForever(tryGeneratingBoard)
