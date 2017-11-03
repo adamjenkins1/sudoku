@@ -8,9 +8,12 @@
 int main(int argc, char **argv) {
   if (argc != 3) {
     std::cerr << "usage: solver <size> <filename>" << std::endl;
+    return 1;
   }
   std::string filename = argv[2];
   int size = atoi(argv[1]);
   std::ifstream in(filename);
   AC3 solver(size);
+  solver.solve();
+  std::cout << solver;
 }

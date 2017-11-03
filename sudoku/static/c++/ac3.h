@@ -15,14 +15,12 @@ class AC3 {
     AC3(int);
     // read in all possible variables
     std::istream& operator>>(std::istream&);
-    // read in the variables (does the first half of the extraction operator)
+    // read in the variables
     void read_vars(std::istream&);
-    // read in the edges (does the second half of the extraction operator)
-    void read_edges(std::istream&);
     // output all variables
-    std::ostream& operator<<(std::ostream&);
+    friend std::ostream& operator<<(std::ostream&, const AC3&);
     // print out the variables (does the same thing as the insertion operator)
-    void print_vars(std::ostream&);
+    void print_vars(std::ostream&) const;
     // attempt to solve the problem
     bool solve();
   private:
@@ -34,6 +32,7 @@ class AC3 {
     };
     // struct representing a variable, its relations and possible values
     struct Variable {
+      Variable(int);
       // vector of edges connecting to other variables
       std::vector<Edge> connections;
       // the possible values of this variable
@@ -41,7 +40,7 @@ class AC3 {
       // the value of this variable
       // (if this is set then domain should be ignored)
       int value = -1;
-      int domain_size();
+      int domain_size() const ;
     };
     // the size of the sudoku board
     int size;

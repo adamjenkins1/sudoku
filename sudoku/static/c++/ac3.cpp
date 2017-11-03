@@ -6,6 +6,7 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <cmath>
 
 /**
  * @brief     default constructor
@@ -18,12 +19,31 @@ AC3::AC3()
  * @param     size:       the size of the board
 */
 AC3::AC3(int size)
-  : size(size) {}
+  : size(size)
+  , vars(size*size, size) {
+  for (unsigned int i = 0; i < vars.size(); ++i) {
+    
+  }
+  //TODO
+  // Fill constraints here for each var. There should be twenty,
+  // 8 in the current box and 6 for row and column each
+}
+
+/**
+ * @brief     Variable consturctor
+ */
+AC3::Variable::Variable(int size)
+  : connections(2*(size-std::sqrt(size))+(size-1))
+  , domain(size) {
+  for (int i = 1; i < size-1; ++i) {
+    domain[i-1] = i;
+  }
+}
 
 /**
  * @brief     returns the size of the variable's domain or 1 if value is set
 */
-int AC3::Variable::domain_size() {
+int AC3::Variable::domain_size() const {
   return (value == -1) ? domain.size() : 1;
 }
 
@@ -31,29 +51,28 @@ int AC3::Variable::domain_size() {
  * @brief     read in the variables then the edges
  */
 std::istream& AC3::operator>>(std::istream& in) {
+  read_vars(in);
   return in;
 }
 
 /**
  * @brief     read in the variables
- *            does the first half of the extraction operator
  */
 void AC3::read_vars(std::istream& in) {
-
-}
-
-/**
- * @brief     read in the edges
- *            does the second half of the extraction operator
- */
-void AC3::read_edges(std::istream& in) {
-
+  int val;
+  for (int i = 0; i < size*size; ++i) {
+    in >> val;
+    if (val == 0) continue;
+    vars[i].value = val;
+    vars[i].domain.clear();
+  }
 }
 
 /**
  * @brief     print all the variables
  */
-std::ostream& AC3::operator<<(std::ostream& out) {
+std::ostream& operator<<(std::ostream& out, const AC3& ob) {
+  ob.print_vars(out);
   return out;
 }
 
@@ -61,8 +80,13 @@ std::ostream& AC3::operator<<(std::ostream& out) {
  * @brief     output the variables
  *            does the same thing as the extraction operator
  */
-void AC3::print_vars(std::ostream& out) {
-
+void AC3::print_vars(std::ostream& out) const {
+  for (auto it = vars.begin(); it != vars.end(); ++it) {
+    if (it->domain_size() == 1)
+      out << it->value << ' ';
+    else
+      out << "- ";
+  }
 }
 
 /**

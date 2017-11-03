@@ -2,7 +2,7 @@
 ## Author: Alexander Corley
 
 CXX=c++
-CXXFLAGS=-std=c++11 -pedantic -Wall -Werror
+CXXFLAGS=-std=c++11 -pedantic -Wall -Werror -g
 SOURCE=$(wildcard *.cpp)
 OBJECTS=$(SOURCE:.cpp=.o)
 EXE=AC3
