@@ -13,10 +13,12 @@ function retryForever(fn) {
 }
 
 function tryGeneratingBoard() {
-  var size = 9;
+  // size = {4, 9, 16}
+  // difficulty = {"easy", "medium", "hard", "very hard"}
+  var size = 16;
   var mySudokuJS = $("#sudoku").sudokuJS({
     boardSize: size,
-    difficulty: "medium"
+    difficulty: "very hard"
   });
 
   $('#solve').on('click', function() {
@@ -24,9 +26,16 @@ function tryGeneratingBoard() {
     var arrayBoard = board.map(function(obj) {
       return obj.val;
     });
-    console.log(board);
-    console.log(arrayBoard);
+
+    for(i = 0; i < arrayBoard.length; i++) {
+      if(arrayBoard[i] == null) {
+        arrayBoard[i] = 0;
+      }
+    }
+
     mySudokuJS.solveAll();
+    console.log(arrayBoard);
+    console.log(arrayBoard.join(" "));
     console.log(mySudokuJS);
   });
   return true;
