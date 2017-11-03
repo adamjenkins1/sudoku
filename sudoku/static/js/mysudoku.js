@@ -35,6 +35,7 @@ function tryGeneratingBoard() {
   if(error == true) {
     alert(errorMsg);
     $(location).attr('href', '/' + size + '/' + shortDiff + '/'); 
+    return;
   }
 
   var mySudokuJS = $("#sudoku").sudokuJS({
