@@ -7,6 +7,7 @@ function retryForever(fn) {
       return;
     }
   } catch (err) {
+    console.log(err);
     console.log('retry...');
     return retryForever(fn);
   }
