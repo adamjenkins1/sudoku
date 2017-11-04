@@ -48,8 +48,9 @@ class AC3 {
     std::vector<Variable> vars;
     // whether all variables have a value
     bool solved = false;
-    // evaluates an edge to make 
     bool evaluate(Edge&);
+    bool is_solved();
+    
     
 };
 

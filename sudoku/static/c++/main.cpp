@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
   std::ifstream in(filename);
   AC3 solver(size);
   in >> solver;
-  solver.solve();
+  std::cout << solver.solve() << std::endl;
+
   std::cout << solver;
 }

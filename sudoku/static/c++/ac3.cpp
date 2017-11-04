@@ -85,6 +85,7 @@ void AC3::read_vars(std::istream& in) {
     if (val == 0) continue;
     vars[i].value = val;
     vars[i].domain.clear();
+    vars[i].domain.push_back(val);
   }
 }
 
@@ -128,29 +129,40 @@ bool AC3::solve() {
     q.pop();
     // reduce based on the edge
     bool changed = evaluate(edge);
+    // if left didnt change then try the next edge
+    if (!changed) continue;
     // if the left only has one value left then set value
     if (edge.left->domain_size() < 1)
       return false;
 
     //if domain size of x decreased then add relavent edges to q
-    if (changed) {
-      if (edge.left->domain_size() == 1) {
-        edge.left->value = edge.left->domain[0];
-      }
-      for (unsigned int i = 0; i < edge.left->connections.size(); ++i) {
-        Variable *neighbor = edge.left->connections[i].right;
 
-        if (neighbor != edge.right) {
-          Edge newEdge;
-          newEdge.left = neighbor;
-          newEdge.right = edge.left;
-          
-          q.push(newEdge);
-        }
+    if (edge.left->domain_size() == 1) {
+      edge.left->value = edge.left->domain[0];
+    }
+    for (unsigned int i = 0; i < edge.left->connections.size(); ++i) {
+      Variable *neighbor = edge.left->connections[i].right;
+
+      if (neighbor != edge.right && edge.right->value != -1) {
+        q.emplace();
+        q.back().left = neighbor;
+        q.back().right = edge.left;
       }
     }
   }
+  solved = is_solved();
+  return solved;
+}
 
+/**
+ * @brief     guess at whether or not the puzzle is solved
+ */
+bool AC3::is_solved() {
+  for (int row = 0; row < size; ++row) {
+    for (int col = 0; col < size; ++col) {
+      if (vars[row*size+col].value == -1) return false;
+    }
+  }
   return true;
 }
 
