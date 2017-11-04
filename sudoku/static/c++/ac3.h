@@ -6,6 +6,7 @@
 #define AC3_H
 
 #include <vector>
+#include <queue>
 #include <iostream>
 
 
@@ -42,6 +43,20 @@ class AC3 {
       int value = -1;
       int domain_size() const ;
     };
+    //stored in the backtracking stack
+    struct BackItem {
+      std::vector<Variable> vars;
+      //the index of the var whose value was guessed
+      int var_choice_i;
+      //the index into the var's domain
+      int var_domain_choice_i;
+
+      BackItem(std::vector<Variable> vars, int var_choice_i, 
+        int var_domain_choice_i):
+          vars(vars), 
+          var_choice_i(var_choice_i),
+          var_domain_choice_i(var_domain_choice_i) { }
+    };
     // the size of the sudoku board
     int size;
     // vector of all variables (variables contain the edges)
@@ -49,6 +64,7 @@ class AC3 {
     // whether all variables have a value
     bool solved = false;
     bool evaluate(Edge&);
+    void queue_neighbors(Variable&, std::queue<Edge>&);
     bool is_solved();
     
     

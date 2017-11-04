@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <algorithm>
 #include <cmath>
 
@@ -123,17 +124,80 @@ bool AC3::solve() {
       q.push(*edge);
     }
   }
-  // add back tracking here
+  //backtracking stack
+  std::stack<BackItem> bck;
   while (!q.empty()) {
     Edge edge = q.front();
     q.pop();
     // reduce based on the edge
     bool changed = evaluate(edge);
+
+    //check if we need to guess
+    if (q.empty()) {
+      Variable *best_var = NULL;
+      int best_i;
+      //get best unfinished var (smallest domain > 1)
+      for (int row = 0; row < size; ++row) {
+        for (int col = 0; col < size; ++col) {
+          if (vars[row*size+col].domain_size() > 1) {
+            if (best_var == NULL || vars[row*size+col].domain_size() < best_var->domain_size()) {
+              best_var = &vars[row*size+col];
+              best_i = row*size+col;
+
+              if (best_var->domain_size() == 2)
+                break;
+            }
+          }
+        }
+      }
+
+      //if there are slots left to fill, guess
+      if (best_var != NULL) {
+        //add current state to the stack
+        bck.emplace(vars, best_i, 0);
+
+        //choose first value in the domain of best_var
+        int val = best_var->domain[0];
+        best_var->domain.clear();
+        best_var->domain.push_back(val);
+        best_var->value = val;
+
+        //add all connections of best_var to the queue
+        queue_neighbors(*best_var, q);
+
+        continue;
+      }
+    }
     // if left didnt change then try the next edge
     if (!changed) continue;
-    // if the left only has one value left then set value
-    if (edge.left->domain_size() < 1)
-      return false;
+    
+    //if need to backtrack
+    if (edge.left->domain_size() < 1) {
+      if (bck.empty()) {
+        //unsolvable
+        return false;
+      } else {
+        //backtrack:
+
+        BackItem &bck_item = bck.top();
+        vars = bck_item.vars;
+
+        bck.pop();
+
+        auto &affected_var = vars[bck_item.var_choice_i];
+        auto &affected_domain = affected_var.domain;
+        //remove the failed guess from the domain
+        affected_domain.erase(affected_domain.begin() + bck_item.var_domain_choice_i);
+
+        if (affected_domain.size() == 1)
+          affected_var.value = affected_domain[0];
+
+        //add all connections of affected_var to the queue
+        queue_neighbors(affected_var, q);
+
+        continue;
+      }
+    }
 
     //if domain size of x decreased then add relavent edges to q
 
@@ -179,5 +243,18 @@ bool AC3::evaluate(Edge& edge) {
     return true;
   }
   return false;
+}
+
+/**
+ * @brief     add arcs to the queue based on the fact var changed its domain
+ */
+void AC3::queue_neighbors(Variable& var, std::queue<Edge>& q) {
+  for (unsigned int i = 0; i < var.connections.size(); ++i) {
+    Variable *neighbor = var.connections[i].right;
+
+    q.emplace();
+    q.back().left = neighbor;
+    q.back().right = &var;
+  }
 }
 
