@@ -103,11 +103,16 @@ std::ostream& operator<<(std::ostream& out, const AC3& ob) {
  *            does the same thing as the extraction operator
  */
 void AC3::print_vars(std::ostream& out) const {
-  for (auto it = vars.begin(); it != vars.end(); ++it) {
-    if (it->domain_size() == 1)
-      out << it->value << ' ';
-    else
-      out << "- ";
+  for (int row = 0; row < size; ++row) {
+    for (int col = 0; col < size; ++col) {
+      if (vars[row*size+col].domain_size() == 1)
+        out << vars[row*size+col].value << ' ';
+      else
+        out << "- ";
+    }
+#ifdef DEBUG
+    out << "\n";
+#endif
   }
   out << "\n";
 }
