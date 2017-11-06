@@ -51,6 +51,4 @@ def solve(request):
     solvedBoard = list(map(int, solvedBoard))
     solvedBoardJson = json.dumps(solvedBoard)
 
-    print(' '.join(initialBoard))
-    print(solvedBoard)
     return HttpResponse(solvedBoardJson, content_type = 'application/json')
