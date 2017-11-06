@@ -4,7 +4,7 @@
 * This Django web app is designed to solve sudoku puzzles and uses sudokuJS, and jQuery for front end, and C++ in the back end to implement algorithms. Our application can solve and display sudoku puzzles of sizes 4x4, 9x9, and 16x16 with varying difficulties.  
 
 ## Requirements
-* All that is required to run this web app is Python 3, Django >= 1.11.5, and g++.
+* All that is required to run this web app is Python 3, Django >= 1.11.5, g++, and make.
 
 ## Running the project
 * To run this project, fork and clone the git repository, and type `make run PORT=<port>`. This will compile the C++ program required for running the algorithms and start the Django web server. If no port is specified, Django will start the web server on port 8000.
