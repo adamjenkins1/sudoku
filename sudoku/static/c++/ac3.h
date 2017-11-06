@@ -52,10 +52,10 @@ class AC3 {
       int var_domain_choice_i;
 
       BackItem(std::vector<Variable> vars, int var_choice_i, 
-        int var_domain_choice_i):
-          vars(vars), 
-          var_choice_i(var_choice_i),
-          var_domain_choice_i(var_domain_choice_i) { }
+        int var_domain_choice_i)
+          : vars(vars)
+          , var_choice_i(var_choice_i)
+          , var_domain_choice_i(var_domain_choice_i) {}
     };
     // the size of the sudoku board
     int size;

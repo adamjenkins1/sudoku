@@ -32,10 +32,10 @@ def about(request):
 def solve(request):
     initialBoard = []
     initialBoard = request.POST.getlist('board[]')
-    with open('sudoku/static/c++/temp.txt', 'w') as f:
+    with open('sudoku/static/c++/tempgrid', 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
-    p = subprocess.Popen(['sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/temp.txt'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(['sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     out, error = p.communicate()
     error = error.decode()[:-1]
     if(error != ''):

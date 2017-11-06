@@ -139,13 +139,13 @@ bool AC3::solve() {
 
     //check if we need to guess
     if (q.empty()) {
-      Variable *best_var = NULL;
+      Variable *best_var = nullptr;
       int best_i;
       //get best unfinished var (smallest domain > 1)
       for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
           if (vars[row*size+col].domain_size() > 1) {
-            if (best_var == NULL || vars[row*size+col].domain_size() < best_var->domain_size()) {
+            if (!best_var || vars[row*size+col].domain_size() < best_var->domain_size()) {
               best_var = &vars[row*size+col];
               best_i = row*size+col;
 
@@ -157,7 +157,7 @@ bool AC3::solve() {
       }
 
       //if there are slots left to fill, guess
-      if (best_var != NULL) {
+      if (best_var) {
         //add current state to the stack
         bck.emplace(vars, best_i, 0);
 
