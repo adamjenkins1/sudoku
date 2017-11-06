@@ -33,14 +33,13 @@ def solve(request):
     with open('sudoku/static/c++/tempgrid', 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
-    p = subprocess.Popen(['sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(['/usr/bin/time', '-f', '"%e"', './sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     out, error = p.communicate()
     error = error.decode()[:-1]
-    if(error != ''):
-        print('Error: ' + error)
-        return HttpResponse(status = '204')
 
+    print(error)
     out = out.decode()[:-2]
+    print(out)
     if(out[0] != '1'):
         print('AC3 encoutered an error')
         return HttpResponse(status = '204')

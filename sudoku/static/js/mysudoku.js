@@ -49,24 +49,30 @@ function tryGeneratingBoard() {
       return obj.val;
     });
 
-    solved = true;
+    $('#refresh').on('click', function() {
+      $(location).attr('href', '/' + size + '/' + shortDiff + '/'); 
+      return;
+    });
+
     for(i = 0; i < arrayBoard.length; i++) {
       if(arrayBoard[i] == null) {
-        solved = false;
         arrayBoard[i] = 0;
       }
     }
 
-    if(solved == true) {
-      alert('Board already solved, no need to solve it again!');
-    }
-    else {
-      $.post("/solve/", {board: arrayBoard}, function(result) {
+    $.post("/solve/", {board: arrayBoard})
+      .done(function(result) {
         console.log(arrayBoard);
         console.log(result);
         mySudokuJS.setBoard(result);
-      });
-    }
+        $('#refreshButton').show();
+        $('#solveButton').hide();
+      })
+    .fail(function(xhr, status, error) {
+      console.log(xhr);
+      console.log(status);
+      console.log(error);
+    });
   });
   return true;
 }
