@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.base import RedirectView
+import json
 import os
 import sys
 import subprocess
@@ -41,12 +42,17 @@ def solve(request):
     if(error != ''):
         print('Error: ' + error)
 
-    out = out.decode()[:-1]
+    out = out.decode()[:-2]
     if(out[0] != '1'):
         print('AC3 encoutered an error')
 
-    solvedBoard = out[1:] 
+    solvedBoard = out[1:]
+    print(solvedBoard)
+    solvedBoard = solvedBoard.strip()
+    solvedBoard = solvedBoard.split(' ')
+    solvedBoard = list(map(int, solvedBoard))
+    solvedBoardJson = json.dumps(solvedBoard)
 
     print(' '.join(initialBoard))
     print(solvedBoard)
-    return HttpResponse()
+    return HttpResponse(solvedBoardJson, content_type = 'application/json')

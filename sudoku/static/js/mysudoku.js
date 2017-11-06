@@ -12,7 +12,6 @@ function retryForever(fn) {
     return retryForever(fn);
   }
 }
-
 function tryGeneratingBoard() {
   // size = {4, 9, 16}
   // difficulty = {"easy", "medium", "hard", "very hard"}
@@ -49,19 +48,28 @@ function tryGeneratingBoard() {
       return obj.val;
     });
 
+    solved = true;
     for(i = 0; i < arrayBoard.length; i++) {
       if(arrayBoard[i] == null) {
+        solved = false;
         arrayBoard[i] = 0;
       }
     }
 
-    $.post("/solve/", {board: arrayBoard}, function(result) {
-      console.log(result);
-    });
-    //mySudokuJS.solveAll();
-    console.log(arrayBoard);
-    console.log(arrayBoard.join(" "));
-    console.log(mySudokuJS);
+
+    if(solved == true) {
+      alert('Board already solved, no need to solve it again!');
+    }
+    else {
+      $.post("/solve/", {board: arrayBoard}, function(result) {
+        console.log(result);
+        mySudokuJS.setBoard(result);
+      });
+      //mySudokuJS.solveAll();
+      console.log(arrayBoard);
+      console.log(arrayBoard.join(" "));
+      console.log(mySudokuJS);
+    }
   });
   return true;
 }
