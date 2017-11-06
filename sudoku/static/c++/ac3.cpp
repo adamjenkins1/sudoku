@@ -224,42 +224,47 @@ bool AC3::solve() {
 }
 
 /**
- * @brief     guess at whether or not the puzzle is solved
+ * @brief     returns false if any value in the vector is false
+ */
+bool all(std::vector<bool> vec) {
+  for (auto it = vec.begin(); it != vec.end(); ++it) {
+    if (!*it) return false;
+  }
+  return true;
+}
+
+/**
+ * @brief     returns true if the puzzle is solved, false otherwise
  */
 bool AC3::is_solved() {
-  for (int row = 0; row < size; ++row) {
-    for (int col = 0; col < size; ++col) {
-      if (vars[row*size+col].value == -1) return false;
+
+  std::vector<bool> rowset(size, 0), colset(size, 0);
+  for (int i = 0; i < size; ++i) {
+    for (int j = 0; j < size; ++j) {
+      if (vars[i*size+j].value)
+        rowset[vars[i*size+j].value-1] = 1;
+      if (vars[j*size+i].value)
+        colset[vars[j*size+i].value-1] = 1;
     }
+    if (!all(rowset) || !all(colset)) return false;
+    rowset.clear(); colset.clear();
   }
 
-#ifdef DEBUG
-  unsigned int size_before;
-  std::vector<int> row_values;
-  //validate rows
-  for (int row = 0; row < size; ++row) {
-    for (int col = 0; col < size; ++col) {
-      row_values.push_back(vars[row*size+col].value);
-    }
-    size_before = row_values.size();
-    auto it = std::unique(row_values.begin(), row_values.end());
-    if (size_before != std::distance(row_values.begin(), it))
-      return false;
-    row_values.clear();
-  }
 
-  //validate columns
-  for (int col = 0; col < size; ++col) {
-    for (int row = 0; row < size; ++row) {
-      row_values.push_back(vars[row*size+col].value);
+  std::vector<bool> block(size, 0);
+  int ssize = std::sqrt(size);
+  for (int brow = 0; brow < ssize; ++brow) {
+    for (int bcol = 0; bcol < ssize; ++bcol) {
+      for (int row = 0; row < ssize; ++row) {
+        for (int col = 0; col < ssize; ++col) {
+          if (vars[(brow*ssize+row)*size+(bcol*ssize+col)].value)
+            block[vars[(brow*ssize+row)*size+(bcol*ssize+col)].value-1] = 1;
+        }
+      }
+      if (!all(block)) return false;
+      block.clear();
     }
-    size_before = row_values.size();
-    auto it = std::unique(row_values.begin(), row_values.end());
-    if (size_before != std::distance(row_values.begin(), it))
-      return false;
-    row_values.clear();
   }
-#endif
   return true;
 }
 
