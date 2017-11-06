@@ -177,7 +177,7 @@ bool AC3::solve() {
     if (!changed) continue;
     
     //if need to backtrack
-    if (edge.left->domain_size() < 1) {
+    if (edge.left->domain.size() < 1) {
       if (bck.empty()) {
         //unsolvable
         return false;
@@ -232,6 +232,34 @@ bool AC3::is_solved() {
       if (vars[row*size+col].value == -1) return false;
     }
   }
+
+#ifdef DEBUG
+  unsigned int size_before;
+  std::vector<int> row_values;
+  //validate rows
+  for (int row = 0; row < size; ++row) {
+    for (int col = 0; col < size; ++col) {
+      row_values.push_back(vars[row*size+col].value);
+    }
+    size_before = row_values.size();
+    auto it = std::unique(row_values.begin(), row_values.end());
+    if (size_before != std::distance(row_values.begin(), it))
+      return false;
+    row_values.clear();
+  }
+
+  //validate columns
+  for (int col = 0; col < size; ++col) {
+    for (int row = 0; row < size; ++row) {
+      row_values.push_back(vars[row*size+col].value);
+    }
+    size_before = row_values.size();
+    auto it = std::unique(row_values.begin(), row_values.end());
+    if (size_before != std::distance(row_values.begin(), it))
+      return false;
+    row_values.clear();
+  }
+#endif
   return true;
 }
 
