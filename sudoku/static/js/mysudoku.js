@@ -23,7 +23,7 @@ function tryGeneratingBoard() {
     errorMsg += "Invalid board size: " + size + ". Defaulting to size 9.\n";
     size = 9;
   }
-  
+
   if(!(diff == "easy" || diff == "medium" || diff == "hard" 
         || diff == "very hard")) {
     error = true;
@@ -31,7 +31,7 @@ function tryGeneratingBoard() {
     diff = "medium";
     shortDiff = "m";
   }
-  
+
   if(error == true) {
     alert(errorMsg);
     $(location).attr('href', '/' + size + '/' + shortDiff + '/'); 
@@ -55,7 +55,10 @@ function tryGeneratingBoard() {
       }
     }
 
-    mySudokuJS.solveAll();
+    $.post("/solve/", {board: arrayBoard}, function(result) {
+      console.log(result);
+    });
+    //mySudokuJS.solveAll();
     console.log(arrayBoard);
     console.log(arrayBoard.join(" "));
     console.log(mySudokuJS);
@@ -63,4 +66,15 @@ function tryGeneratingBoard() {
   return true;
 }
 
+function csrfSafeMethod(method) {
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    }
+  }
+});
 retryForever(tryGeneratingBoard)

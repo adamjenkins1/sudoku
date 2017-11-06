@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.base import RedirectView
+import json
 
 def index(request, boardSize, diff):
     selected = 'home'
@@ -25,3 +26,10 @@ def index(request, boardSize, diff):
 def about(request):
     selected = 'about'
     return render(request, 'about.html', {'selected': selected})
+
+def solve(request):
+    ret = request.POST
+    initialBoard = []
+    initialBoard = ret.getlist('board[]')
+    print(initialBoard)
+    return HttpResponse()
