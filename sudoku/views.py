@@ -1,9 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.base import RedirectView
-import json
-import os
-import sys
-import subprocess
+import json, os, sys, subprocess
 
 def index(request, boardSize, diff):
     selected = 'home'
@@ -41,13 +38,14 @@ def solve(request):
     error = error.decode()[:-1]
     if(error != ''):
         print('Error: ' + error)
+        return HttpResponse(status = '204')
 
     out = out.decode()[:-2]
     if(out[0] != '1'):
         print('AC3 encoutered an error')
+        return HttpResponse(status = '204')
 
     solvedBoard = out[1:]
-    print(solvedBoard)
     solvedBoard = solvedBoard.strip()
     solvedBoard = solvedBoard.split(' ')
     solvedBoard = list(map(int, solvedBoard))
