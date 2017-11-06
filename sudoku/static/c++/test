@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -z $sizes ]; then
+  sizes="$(ls tests/ | sort -n)"
+fi
+
+for size in $sizes; do
+  files="$(ls tests/$size/)"
+  for file in $files; do
+    echo "running test on tests/$size/$file"
+    time AC3 $size tests/$size/$file
+  done
+done

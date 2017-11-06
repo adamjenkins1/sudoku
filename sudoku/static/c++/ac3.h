@@ -41,7 +41,6 @@ class AC3 {
       // the value of this variable
       // (if this is set then domain should be ignored)
       int value = -1;
-      int domain_size() const ;
     };
     //stored in the backtracking stack
     struct BackItem {

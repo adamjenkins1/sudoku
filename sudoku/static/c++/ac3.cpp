@@ -62,13 +62,6 @@ AC3::Variable::Variable(int size) {
 }
 
 /**
- * @brief     returns the size of the variable's domain or 1 if value is set
-*/
-int AC3::Variable::domain_size() const {
-  return (value == -1) ? domain.size() : 1;
-}
-
-/**
  * @brief     read in the variables then the edges
  */
 std::istream& operator>>(std::istream& in, AC3& ob) {
@@ -105,7 +98,7 @@ std::ostream& operator<<(std::ostream& out, const AC3& ob) {
 void AC3::print_vars(std::ostream& out) const {
   for (int row = 0; row < size; ++row) {
     for (int col = 0; col < size; ++col) {
-      if (vars[row*size+col].domain_size() == 1)
+      if (vars[row*size+col].domain.size() == 1)
         out << vars[row*size+col].value << ' ';
       else
         out << "- ";
@@ -144,12 +137,12 @@ bool AC3::solve() {
       //get best unfinished var (smallest domain > 1)
       for (int row = 0; row < size; ++row) {
         for (int col = 0; col < size; ++col) {
-          if (vars[row*size+col].domain_size() > 1) {
-            if (!best_var || vars[row*size+col].domain_size() < best_var->domain_size()) {
+          if (vars[row*size+col].domain.size() > 1) {
+            if (!best_var || vars[row*size+col].domain.size() < best_var->domain.size()) {
               best_var = &vars[row*size+col];
               best_i = row*size+col;
 
-              if (best_var->domain_size() == 2)
+              if (best_var->domain.size() == 2)
                 break;
             }
           }
@@ -206,7 +199,7 @@ bool AC3::solve() {
 
     //if domain size of x decreased then add relavent edges to q
 
-    if (edge.left->domain_size() == 1) {
+    if (edge.left->domain.size() == 1) {
       edge.left->value = edge.left->domain[0];
     }
     for (unsigned int i = 0; i < edge.left->connections.size(); ++i) {
