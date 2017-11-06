@@ -9,7 +9,7 @@
 ## Running the project
 * To run this project, fork and clone the git repository, and type `make run PORT=<port>`. This will compile the C++ program required for running the algorithms and start the Django web server. If no port is specified, Django will start the web server on port 8000.
 
-#### The Algorithms
+## The Algorithms
 * [AC-3][ac3 wiki]
 
 ## Authors
