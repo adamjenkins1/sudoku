@@ -10,12 +10,6 @@
 #include <cmath>
 
 /**
- * @brief     default constructor
- */
-AC3::AC3()
-  : AC3(9) {}
-
-/**
  * @brief     Constructor
  * @param     size:       the size of the board
 */
@@ -230,7 +224,7 @@ bool all(std::vector<bool> vec) {
  * @brief     returns true if the puzzle is solved, false otherwise
  */
 bool AC3::is_solved() {
-
+  //check to see if the rows and columns are all valid
   std::vector<bool> rowset(size, 0), colset(size, 0);
   for (int i = 0; i < size; ++i) {
     for (int j = 0; j < size; ++j) {

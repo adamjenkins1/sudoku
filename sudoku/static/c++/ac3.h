@@ -12,7 +12,6 @@
 
 class AC3 {
   public:
-    AC3();
     AC3(int);
     // read in all possible variables
     friend std::istream& operator>>(std::istream&, AC3&);
@@ -25,6 +24,7 @@ class AC3 {
     // attempt to solve the problem
     bool solve();
   private:
+    AC3() {}
     struct Variable;
     // struct representing an edge edges have to be unidirectional
     struct Edge {
