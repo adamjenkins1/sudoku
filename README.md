@@ -1,7 +1,7 @@
 # Sudoku Solver
 
 ## About
-* This Django web app is designed to solve sudoku puzzles and uses sudokuJS, and jQuery for front end, and C++ in the back end to implement algorithms. Our application can solve and display sudoku puzzles of sizes 4x4, 9x9, and 16x16 with varying difficulties.  
+* This Django web app is designed to solve sudoku puzzles and uses [sudokuJS][sudokuJS link], and jQuery for front end, and C++ in the back end to implement algorithms. Our application can solve and display sudoku puzzles of sizes 4x4, 9x9, and 16x16 with varying difficulties.  
 
 ## Requirements
 * All that is required to run this web app is Python 3, Django >= 1.11.5, g++, and make.
@@ -22,3 +22,4 @@
 [caleb github]:	http://github.com/calexander13
 
 [ac3 wiki]: https://en.wikipedia.org/wiki/AC-3_algorithm
+[sudokuJS link]: https://github.com/pocketjoso/sudokuJS
