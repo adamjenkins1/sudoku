@@ -37,8 +37,6 @@ def solve(request):
     real = time.time() - start
     print(real)
     out, error = p.communicate()
-    real = time.time() - start
-    print(real)
     error = error.decode()[:-1]
 
     if(error != ''):
