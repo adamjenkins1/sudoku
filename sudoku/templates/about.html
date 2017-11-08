@@ -5,10 +5,45 @@
 {% block content %}
 
 <div class="container">
-  <h2>About this website...</h2>
+  <h3>About Sudoku Solver...</h3>
+  <ul>
+    <p>This <a href="https://www.djangoproject.com/" target="new">Django</a> web app is designed 
+    to solve <a href="https://en.wikipedia.org/wiki/Sudoku" target="new">Sudoku</a> puzzles 
+    and uses <a href="https://github.com/pocketjoso/sudokuJS" target="new">sudokuJS</a>, 
+    <a href="https://jquery.com/" target="new">jQuery</a>, and
+    <a href="https://getbootstrap.com/" target="new">Bootstrap</a>
+    for front end, and C++ in the back end to implement algorithms. Our application can solve 
+    and display Sudoku puzzles of sizes 4x4, 9x9, and 16x16 with varying difficulties.</p>  
+  </ul>
+
+  <h3>Requirements</h3>
+  <ul>
+    <p>All that is required to run this web app is 
+    <a href="https://www.python.org/downloads/" target="new">Python 3</a>, 
+    <a href="https://www.djangoproject.com/" target="new">Django</a> &gt;= 1.11.5, g++, and make.</p>
+  </ul>
+
+  <h3>Running the project</h3>
+  <ul>
+    <p>To run this project, fork and clone the 
+    <a href="https://github.com/adamjenkins1/sudoku" target="new">git repository</a>, and type 
+    <code>make run PORT=&lt;port&gt;</code>. This will compile the C++ program required for 
+    running the algorithms and start the Django web server. If no port is specified, Django 
+    will start the web server on port 8000. To install requirements run <code>make pyreqs</code>.
+    This is also done automatically when <code>make run</code> is called.</p>
+  </ul>
+
+  <h3>The Algorithms</h3>
+  <ul>
+    <a href="https://en.wikipedia.org/wiki/AC-3_algorithm" target="new">AC-3</a>
+  </ul>
+
+  <h3>Authors</h3>
+  <ul>
+    <a href="https://github.com/adamjenkins1" target="new">Adam Jenkins</a><br>
+    <a href="https://github.com/archer31" target="new">Alexander Corley</a><br>
+    <a href="https://github.com/calexander13" target="new">Caleb Alexander</a><br>
+  </ul>
 </div> <!-- /container -->
 
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}
