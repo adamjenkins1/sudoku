@@ -17,6 +17,7 @@ class Genetic_board {
     void set_row(std::vector<int>);
     void trade_cols(std::vector<int>, Genetic_board&);
     void trade_rows(std::vector<int>, Genetic_board&);
+    friend bool operator<(const Genetic_board&, const Genetic_board&);
     int H;
   private:
     std::vector<std::vector<int> > board;

@@ -9,12 +9,12 @@
 
 class Genetic {
   public:
-    Genetic();
+    Genetic(std::vector<std::vector<int> >&);
     void solve();
   private:
     Genetic_board orig;
     int size;
-    std::priority_queue<Genetic_board>
+    std::priority_queue<Genetic_board> boards;
     void breed();
     void bread() {breed(); }
 

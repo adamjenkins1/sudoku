@@ -2,18 +2,20 @@
 //Author: Alexander Corley
 //11-08-2017
 #include "genetic.h"
+#include <vector>
 
 /**
  * @brief     constructor for the Genetic Algorithm takes the original board as input
  */
-Genetic::Genetic(const std::vector<std::vector<int> > &board) {
+Genetic::Genetic(std::vector<std::vector<int> > &board)
+  : orig(board) {
 
 }
 
 /**
  * @brief     solves the board using a genetic algorithm
  */
-Genetic::void solve() {
+void Genetic::solve() {
 
 }
 
