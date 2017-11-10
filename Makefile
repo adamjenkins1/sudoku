@@ -7,7 +7,7 @@ PORT="8000"
 
 #run server
 run: AC3 pyreqs
-	manage.py runserver $(PORT)
+	./manage.py runserver $(PORT)
 
 #make AC3
 AC3:
