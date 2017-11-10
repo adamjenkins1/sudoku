@@ -4,6 +4,7 @@
 #include "genetic_board.h"
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 /**
  * @brief     default constructor for a board
@@ -17,7 +18,7 @@ Genetic_board::Genetic_board(const std::vector<std::vector<int> > &board)
 /**
  * @brief     gets the values from a column
  */
-std::vector<int> Genetic_board::get_col() {
+std::vector<int>& Genetic_board::get_col(int i) {
 
   return std::vector<int>();
 }
@@ -25,7 +26,7 @@ std::vector<int> Genetic_board::get_col() {
 /**
  * @brief     gets the values from a row
  */
-std::vector<int> Genetic_board::get_row() {
+std::vector<int>& Genetic_board::get_row(int i) {
 
   return std::vector<int>();
 }
@@ -33,7 +34,7 @@ std::vector<int> Genetic_board::get_row() {
 /**
  * @brief     sets a column with values
  */
-void Genetic_board::set_col(std::vector<int> vals) {
+void Genetic_board::set_col(int i, const std::vector<int>& vals) {
   assert(vals.size() == size);
 
 }
@@ -41,7 +42,7 @@ void Genetic_board::set_col(std::vector<int> vals) {
 /**
  * @brief     sets a row with values
  */
-void Genetic_board::set_row(std::vector<int> vals) {
+void Genetic_board::set_row(int i, const std::vector<int>& vals) {
   assert(vals.size() == size);
 
 }
@@ -49,7 +50,7 @@ void Genetic_board::set_row(std::vector<int> vals) {
 /**
  * @brief     trades columns with the other board
  */
-void Genetic_board::trade_cols(std::vector<int> indexes, Genetic_board& other) {
+void Genetic_board::trade_cols(std::vector<int>& indexes, Genetic_board& other) {
   for (auto index: indexes) {
     for (int i = 0; i < size; ++i) {
       std::swap(board[i][index], other.board[i][index]);
@@ -60,7 +61,7 @@ void Genetic_board::trade_cols(std::vector<int> indexes, Genetic_board& other) {
 /**
  * @brief     trades rows with the other board
  */
-void Genetic_board::trade_rows(std::vector<int> indexes, Genetic_board& other) {
+void Genetic_board::trade_rows(std::vector<int>& indexes, Genetic_board& other) {
   for (auto index: indexes) {
     board[index].swap(other[index]);
   }

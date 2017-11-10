@@ -11,12 +11,12 @@
 class Genetic_board {
   public:
     Genetic_board(const std::vector<std::vector<int> >&);
-    std::vector<int> get_col();
-    std::vector<int> get_row();
-    void set_col(std::vector<int>);
-    void set_row(std::vector<int>);
-    void trade_cols(std::vector<int>, Genetic_board&);
-    void trade_rows(std::vector<int>, Genetic_board&);
+    std::vector<int>& get_col(int);
+    std::vector<int>& get_row(int);
+    void set_col(int, const std::vector<int>&);
+    void set_row(int, const std::vector<int>&);
+    void trade_cols(std::vector<int>&, Genetic_board&);
+    void trade_rows(std::vector<int>&, Genetic_board&);
     friend bool operator<(const Genetic_board&, const Genetic_board&);
     int H;
   private:
