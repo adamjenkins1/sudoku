@@ -12,7 +12,7 @@
 Genetic_board::Genetic_board(const std::vector<std::vector<int> > &board)
   : board(board)
   , size(board.size()) {
-
+  h();
 }
 
 /**
