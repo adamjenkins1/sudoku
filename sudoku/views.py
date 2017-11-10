@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
-import json, subprocess, time
+import json, subprocess
+from time import strftime, gmtime
 
 def index(request, boardSize, diff):
     selected = 'home'
@@ -21,6 +22,18 @@ def index(request, boardSize, diff):
           'boardSize': boardSize, 
           'difficulty': difficulty,
           'shortDifficulty': shortDifficulty})
+
+def data(request):
+    return render(request, 'data.html')
+
+def saveData(request, boardSize, diff):
+    board = []
+    board = request.POST.getlist('board[]')
+    filename = boardSize + '_' + diff + '_' + strftime('%Y-%m-%d_%H:%M:%S', gmtime()) + '.txt'
+    with open('sudoku/static/data/' + filename, 'w') as f:
+        f.write(' '.join(board))
+    
+    return HttpResponse()
 
 def about(request):
     selected = 'about'

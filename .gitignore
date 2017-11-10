@@ -110,4 +110,4 @@ ENV/
 
 *.swp
 tempgrid
-/data
+data/
