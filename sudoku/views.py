@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 import json, subprocess
-from time import strftime, gmtime
+from time import strftime, gmtime, time
 
 def index(request, boardSize, diff):
     selected = 'home'
@@ -45,9 +45,9 @@ def solve(request):
     with open('sudoku/static/c++/tempgrid', 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
-    start = time.time()
+    start = time()
     p = subprocess.Popen(['./sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    real = time.time() - start
+    real = time() - start
     print(real)
     out, error = p.communicate()
     error = error.decode()[:-1]
