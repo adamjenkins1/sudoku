@@ -14,14 +14,18 @@
  * @brief     Constructor
  * @param     size:       the size of the board
 */
-AC3::AC3(int size)
+AC3::AC3(int size, Board board)
   : size(size)
   , vars(size*size, size)
-  , board(size) {
+  , board(board) {
   for (int row = 0; row < size; ++row) {
     for (int col = 0; col < size; ++col) {
       Variable &var = vars[row*size+col];
       var.row = row; var.col = col;
+      if (board.get(row, col) != 0) {
+        var.domain.clear();
+        var.domain.push_back(board.get(row, col));
+      }
       std::vector<Edge> &cons = var.connections;
       int sqrt_size = std::sqrt(size);
       int block_row = row/sqrt_size, block_col = col/sqrt_size;
@@ -61,55 +65,11 @@ AC3::Variable::Variable(int size, int row, int col)
 }
 
 /**
- * @brief     read in the variables then the edges
- */
-std::istream& operator>>(std::istream& in, AC3& ob) {
-  ob.read_vars(in);
-  return in;
-}
-
-/**
- * @brief     read in the variables
- */
-void AC3::read_vars(std::istream& in) {
-  int val;
-  for (int row = 0; row < size; ++row) {
-    for (int col = 0; col < size; ++col) {
-      in >> val;
-      if (val != 0) {
-      board.set(row, col, val);
-      vars[row*size+col].domain.clear();
-      vars[row*size+col].domain.push_back(val); }
-    }
-  }
-}
-
-/**
- * @brief     print all the variables
+ * @brief     print the board
  */
 std::ostream& operator<<(std::ostream& out, const AC3& ob) {
-  ob.print_vars(out);
+  out << ob.board << "\n";
   return out;
-}
-
-/**
- * @brief     output the variables
- *            does the same thing as the extraction operator
- */
-void AC3::print_vars(std::ostream& out) const {
-  out << board.H << "\n";
-  for (int row = 0; row < size; ++row) {
-    for (int col = 0; col < size; ++col) {
-      if (vars[row*size+col].domain.size() == 1)
-        out << board.get(row, col) << ' ';
-      else
-        out << "- ";
-    }
-#ifdef DEBUG
-    out << "\n";
-#endif
-  }
-  out << "\n";
 }
 
 /**

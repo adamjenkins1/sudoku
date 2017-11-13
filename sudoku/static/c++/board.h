@@ -5,6 +5,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <vector>
+#include <iostream>
 
 //this class just holds boards for the genetic algorithm to play with
 
@@ -18,9 +19,12 @@ class Board {
     std::vector<int> get_row(int) const;
     void set_col(int, const std::vector<int>&);
     void set_row(int, const std::vector<int>&);
-    void trade_cols(std::vector<int>&, Board&);
-    void trade_rows(std::vector<int>&, Board&);
+    void trade_cols(std::vector<int>, Board&);
+    void trade_rows(std::vector<int>, Board&);
     friend bool operator<(const Board&, const Board&);
+    friend std::ostream& operator<<(std::ostream& out, const Board& ob);
+    friend std::istream& operator>>(std::istream& in, Board& ob);
+    void print_board(std::ostream& out) const;
     int H;
   private:
     std::vector<std::vector<int> > board;

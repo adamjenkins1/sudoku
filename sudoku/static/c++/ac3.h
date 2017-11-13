@@ -13,19 +13,10 @@
 
 class AC3 {
   public:
-    AC3(int);
-    // read in all possible variables
-    friend std::istream& operator>>(std::istream&, AC3&);
-    // read in the variables
-    void read_vars(std::istream&);
-    // output all variables
+    AC3(int, Board);
     friend std::ostream& operator<<(std::ostream&, const AC3&);
-    // print out the variables (does the same thing as the insertion operator)
-    void print_vars(std::ostream&) const;
-    // attempt to solve the problem
     bool solve();
   private:
-    AC3() : AC3(9) {}
     struct Variable;
     // struct representing an edge edges have to be unidirectional
     struct Edge {

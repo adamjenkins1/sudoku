@@ -5,6 +5,7 @@
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 /**
  * @brief     default constructor for a board
@@ -18,6 +19,46 @@ Board::Board(const std::vector<std::vector<int> > &board)
 Board::Board(int size)
   : board(size, std::vector<int>(size, 0))
   , size(size) {}
+
+
+
+/**
+ * @brief     print the board
+ */
+std::ostream& operator<<(std::ostream& out, const Board& ob) {
+  ob.print_board(out);
+  return out;
+}
+
+/**
+ * @brief     output the board
+ *            does the same thing as the extraction operator
+ */
+void Board::print_board(std::ostream& out) const {
+  for (unsigned int row = 0; row < size; ++row) {
+    for (unsigned int col = 0; col < size; ++col) {
+      if (get(row, col) != 0)
+        out << get(row, col) << ' ';
+      else
+        out << "- ";
+    }
+#ifdef DEBUG
+    out << "\n";
+#endif
+  }
+  out << "\n";
+}
+
+std::istream& operator>>(std::istream& in, Board& ob) {
+  int val;
+  for (unsigned int row = 0; row < ob.size; ++row) {
+    for (unsigned int col = 0; col < ob.size; ++col) {
+      in >> val;
+      ob.set(row, col, val);
+    }
+  }
+  return in;
+}
 
 void Board::set(int row, int col, int val) {
   board[row][col] = val;
@@ -71,7 +112,7 @@ void Board::set_row(int index, const std::vector<int>& vals) {
 /**
  * @brief     trades columns with the other board
  */
-void Board::trade_cols(std::vector<int>& indexes, Board& other) {
+void Board::trade_cols(std::vector<int> indexes, Board& other) {
   for (auto index: indexes) {
     for (unsigned int i = 0; i < size; ++i) {
       std::swap(board[i][index], other.board[i][index]);
@@ -84,7 +125,7 @@ void Board::trade_cols(std::vector<int>& indexes, Board& other) {
 /**
  * @brief     trades rows with the other board
  */
-void Board::trade_rows(std::vector<int>& indexes, Board& other) {
+void Board::trade_rows(std::vector<int> indexes, Board& other) {
   for (auto index: indexes) {
     board[index].swap(other.board[index]);
   }
