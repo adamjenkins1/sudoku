@@ -2,6 +2,7 @@
 //Author: Alexander Corley
 //10-31-2017
 #include "ac3.h"
+#include "board.h"
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -15,10 +16,12 @@
 */
 AC3::AC3(int size)
   : size(size)
-  , vars(size*size, size) {
+  , vars(size*size, size)
+  , board(size) {
   for (int row = 0; row < size; ++row) {
     for (int col = 0; col < size; ++col) {
       Variable &var = vars[row*size+col];
+      var.row = row; var.col = col;
       std::vector<Edge> &cons = var.connections;
       int sqrt_size = std::sqrt(size);
       int block_row = row/sqrt_size, block_col = col/sqrt_size;
@@ -49,7 +52,9 @@ AC3::AC3(int size)
 /**
  * @brief     Variable consturctor
  */
-AC3::Variable::Variable(int size) {
+AC3::Variable::Variable(int size, int row, int col)
+  : row(row) 
+  , col(col) {
   for (int i = 1; i <=size; ++i) {
     domain.push_back(i);
   }
@@ -68,12 +73,14 @@ std::istream& operator>>(std::istream& in, AC3& ob) {
  */
 void AC3::read_vars(std::istream& in) {
   int val;
-  for (int i = 0; i < size*size; ++i) {
-    in >> val;
-    if (val == 0) continue;
-    vars[i].value = val;
-    vars[i].domain.clear();
-    vars[i].domain.push_back(val);
+  for (int row = 0; row < size; ++row) {
+    for (int col = 0; col < size; ++col) {
+      in >> val;
+      if (val != 0) {
+      board.set(row, col, val);
+      vars[row*size+col].domain.clear();
+      vars[row*size+col].domain.push_back(val); }
+    }
   }
 }
 
@@ -90,10 +97,11 @@ std::ostream& operator<<(std::ostream& out, const AC3& ob) {
  *            does the same thing as the extraction operator
  */
 void AC3::print_vars(std::ostream& out) const {
+  out << board.H << "\n";
   for (int row = 0; row < size; ++row) {
     for (int col = 0; col < size; ++col) {
       if (vars[row*size+col].domain.size() == 1)
-        out << vars[row*size+col].value << ' ';
+        out << board.get(row, col) << ' ';
       else
         out << "- ";
     }
@@ -146,13 +154,13 @@ bool AC3::solve() {
       //if there are slots left to fill, guess
       if (best_var) {
         //add current state to the stack
-        bck.emplace(vars, best_i, 0);
+        bck.emplace(board, vars, best_i, 0);
 
         //choose first value in the domain of best_var
         int val = best_var->domain[0];
         best_var->domain.clear();
         best_var->domain.push_back(val);
-        best_var->value = val;
+        board.set(best_var->row, best_var->col, val);
 
         //add all connections of best_var to the queue
         queue_neighbors(*best_var, q);
@@ -173,6 +181,7 @@ bool AC3::solve() {
 
         BackItem &bck_item = bck.top();
         vars = bck_item.vars;
+        board = bck_item.board;
 
         bck.pop();
 
@@ -182,7 +191,7 @@ bool AC3::solve() {
         affected_domain.erase(affected_domain.begin() + bck_item.var_domain_choice_i);
 
         if (affected_domain.size() == 1)
-          affected_var.value = affected_domain[0];
+          board.set(affected_var.row, affected_var.col, affected_domain[0]);
 
         //add all connections of affected_var to the queue
         queue_neighbors(affected_var, q);
@@ -194,12 +203,12 @@ bool AC3::solve() {
     //if domain size of x decreased then add relavent edges to q
 
     if (edge.left->domain.size() == 1) {
-      edge.left->value = edge.left->domain[0];
+      board.set(edge.left->row, edge.left->col, edge.left->domain[0]);
     }
     for (unsigned int i = 0; i < edge.left->connections.size(); ++i) {
       Variable *neighbor = edge.left->connections[i].right;
 
-      if (neighbor != edge.right && edge.right->value != -1) {
+      if (neighbor != edge.right && board.get(edge.right->row, edge.right->col) != 0) {
         q.emplace();
         q.back().left = neighbor;
         q.back().right = edge.left;
@@ -207,52 +216,15 @@ bool AC3::solve() {
     }
   }
   solved = is_solved();
+  board.set(0,0,board.get(0,0));
   return solved;
-}
-
-/**
- * @brief     returns false if any value in the vector is false
- */
-bool all(std::vector<bool> vec) {
-  for (auto it = vec.begin(); it != vec.end(); ++it) {
-    if (!*it) return false;
-  }
-  return true;
 }
 
 /**
  * @brief     returns true if the puzzle is solved, false otherwise
  */
 bool AC3::is_solved() {
-  //check to see if the rows and columns are all valid
-  std::vector<bool> rowset(size, 0), colset(size, 0);
-  for (int i = 0; i < size; ++i) {
-    for (int j = 0; j < size; ++j) {
-      if (vars[i*size+j].value)
-        rowset[vars[i*size+j].value-1] = 1;
-      if (vars[j*size+i].value)
-        colset[vars[j*size+i].value-1] = 1;
-    }
-    if (!all(rowset) || !all(colset)) return false;
-    rowset.clear(); colset.clear();
-  }
-
-
-  std::vector<bool> block(size, 0);
-  int ssize = std::sqrt(size);
-  for (int brow = 0; brow < ssize; ++brow) {
-    for (int bcol = 0; bcol < ssize; ++bcol) {
-      for (int row = 0; row < ssize; ++row) {
-        for (int col = 0; col < ssize; ++col) {
-          if (vars[(brow*ssize+row)*size+(bcol*ssize+col)].value)
-            block[vars[(brow*ssize+row)*size+(bcol*ssize+col)].value-1] = 1;
-        }
-      }
-      if (!all(block)) return false;
-      block.clear();
-    }
-  }
-  return true;
+  return board.H == 0;
 }
 
 /**
@@ -260,7 +232,7 @@ bool AC3::is_solved() {
  */
 bool AC3::evaluate(Edge& edge) {
   //restrict domain of edge.left based on edge.right
-  auto it = std::find(edge.left->domain.begin(), edge.left->domain.end(), edge.right->value);
+  auto it = std::find(edge.left->domain.begin(), edge.left->domain.end(), board.get(edge.right->row, edge.right->col));
   //if left's domain contains edge.right->value
   if (it != edge.left->domain.end()) {
     // remove from left's domain

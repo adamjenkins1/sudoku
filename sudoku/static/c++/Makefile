@@ -7,7 +7,7 @@ CXX=c++
 CXXFLAGS=-std=c++11 -pedantic -Wall -Werror -g $(DEBUG)
 SOURCE=$(wildcard *.cpp)
 OBJECTS=$(SOURCE:.cpp=.o)
-EXE=AC3
+EXE=solver
 
 
 EXE: $(OBJECTS)

@@ -5,16 +5,16 @@
 #ifndef GENETIC_H
 #define GENETIC_H
 #include <queue>
-#include "genetic_board.h"
+#include "board.h"
 
 class Genetic {
   public:
     Genetic(std::vector<std::vector<int> >&);
     void solve();
   private:
-    Genetic_board orig;
+    Board orig;
     int size;
-    std::priority_queue<Genetic_board> boards;
+    std::priority_queue<Board> boards;
     void breed();
     void bread() {breed(); }
 

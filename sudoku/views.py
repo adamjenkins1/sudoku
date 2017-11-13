@@ -46,7 +46,7 @@ def solve(request):
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
     start = time()
-    p = subprocess.Popen(['./sudoku/static/c++/AC3', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(['./sudoku/static/c++/solver', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     real = time() - start
     print(real)
     out, error = p.communicate()
@@ -59,7 +59,7 @@ def solve(request):
     out = out.decode()[:-2]
     print(out)
     if(out[0] != '1'):
-        print('AC3 encoutered an error')
+        print('solver encoutered an error')
         return HttpResponse(status = '204')
 
     solvedBoard = out[1:]

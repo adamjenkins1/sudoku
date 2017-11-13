@@ -1,16 +1,18 @@
-#Makefile to run server and make the AC3 executable
+#Makefile to run server and make the solver executable
 #Author: Alexander Corley
 # 11-6-2017
 
 PY="python3"
 PORT="8000"
 
+.PHONY: run clean pyreqs save-pyreqs
+
 #run server
-run: AC3 pyreqs
+run: solver pyreqs
 	./manage.py runserver $(PORT)
 
-#make AC3
-AC3:
+#make solver
+solver:
 	make -C sudoku/static/c++/
 
 #clean up stuff

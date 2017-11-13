@@ -2,6 +2,7 @@
 //Author: Alexander Corley
 //11-08-2017
 #include "genetic.h"
+#include "board.h"
 #include <vector>
 #include <cstdlib>
 #include <ctime>
@@ -22,7 +23,7 @@ Genetic::Genetic(std::vector<std::vector<int> > &board)
  */
 void Genetic::solve() {
 	const int pop_size = 15;
-	const float mutation_chance = .01;
+//	const float mutation_chance = .01;
 
 	std::srand(std::time(0));
 
@@ -32,8 +33,8 @@ void Genetic::solve() {
 		//generate random board
 		for (int row = 0; row < size; ++row) {
 			for (int col = 0; col < size; ++col) {
-				if (orig.board[row][col] >= 1)
-					contents[row][col] = orig.board[row][col];
+				if (orig.get(row, col) >= 1)
+					contents[row][col] = orig.get(row, col);
 				else
 					contents[row][col] = rand() % size + 1;
 			}

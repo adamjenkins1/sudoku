@@ -2,7 +2,7 @@
 *.o
 
 # AI executables
-AC3
+solver
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
