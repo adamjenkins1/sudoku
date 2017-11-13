@@ -23,8 +23,13 @@ def index(request, boardSize, diff):
           'difficulty': difficulty,
           'shortDifficulty': shortDifficulty})
 
-def data(request):
-    return render(request, 'data.html')
+def about(request):
+    selected = 'about'
+    return render(request, 'about.html', {'selected': selected})
+
+def stats(request):
+    selected = 'stats'
+    return render(request, 'stats.html', {'selected': selected})
 
 def saveData(request, boardSize, diff):
     board = []
@@ -35,18 +40,18 @@ def saveData(request, boardSize, diff):
     
     return HttpResponse()
 
-def about(request):
-    selected = 'about'
-    return render(request, 'about.html', {'selected': selected})
-
-def solve(request):
+def solve(request, algorithm):
     initialBoard = []
     initialBoard = request.POST.getlist('board[]')
     with open('sudoku/static/c++/tempgrid', 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
+
+    if(algorithm != 'AC3' and algorithm != 'Genetic'):
+        return HttpResponse('Chosen algorithm not in supported algorithms', status = '400')
+
     start = time()
-    p = subprocess.Popen(['./sudoku/static/c++/solver', str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(['./sudoku/static/c++/solver', algorithm, str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     real = time() - start
     print(real)
     out, error = p.communicate()
@@ -54,13 +59,13 @@ def solve(request):
 
     if(error != ''):
         print('Error while calling algorithm: ' + error)
-        return HttpResponse(status = '204')
+        return HttpResponse('Error while calling algorithm', status = '500')
 
     out = out.decode()[:-2]
     print(out)
     if(out[0] != '1'):
         print('solver encoutered an error')
-        return HttpResponse(status = '204')
+        return HttpResponse('Solver unable to find puzzle solution', status = '500')
 
     solvedBoard = out[1:]
     solvedBoard = solvedBoard.strip()

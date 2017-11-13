@@ -6,12 +6,26 @@ function retryForever(fn) {
       $('#solveButton').show();
       return;
     }
-  } catch (err) {
+  } 
+  catch (err) {
     console.log(err);
     console.log('retry...');
     return retryForever(fn);
   }
 }
+
+var algorithm = "AC3";
+$('#algorithm-ac3').parent().siblings().removeClass('active').end().addClass('active');
+
+$('#algorithm-ac3').on('click', function() {
+  $(this).parent().siblings().removeClass('active').end().addClass('active');
+  algorithm = "AC3";
+});
+
+$('#algorithm-genetic').on('click', function() {
+  $(this).parent().siblings().removeClass('active').end().addClass('active');
+  algorithm = "Genetic";
+});
 
 function tryGeneratingBoard() {
   // size = {4, 9, 16}
@@ -60,7 +74,7 @@ function tryGeneratingBoard() {
       }
     }
 
-    $.post("/solve/", {board: arrayBoard})
+    $.post("/solve/" + algorithm + "/", {board: arrayBoard})
       .done(function(result) {
         console.log(arrayBoard);
         console.log(result);
@@ -70,7 +84,7 @@ function tryGeneratingBoard() {
       })
     .fail(function(xhr, status, error) {
       console.log(xhr);
-      console.log(status);
+      console.log(xhr.responseText);
       console.log(error);
     });
   });
