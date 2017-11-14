@@ -170,7 +170,8 @@ void Board::h() {
     }
     if (!all(rowset)) H++;
     if (!all(colset)) H++;
-    clear(colset); clear(rowset);
+    std::fill(rowset.begin(), rowset.end(), false);
+    std::fill(colset.begin(), colset.end(), false);
   }
 
   std::vector<bool> block(size, 0);
@@ -184,7 +185,7 @@ void Board::h() {
         }
       }
       if (!all(block)) H++;
-      clear(block);
+      std::fill(block.begin(), block.end(), false);
     }
   }
 }
