@@ -15,14 +15,20 @@ using std::vector;
  * @brief     constructor for the Genetic Algorithm takes the original board as input
  */
 Genetic::Genetic(Board& board)
-  : orig(board) {
+  : orig(board)
+  , size(orig.get_size()) {
+}
 
+std::ostream& operator<<(std::ostream& out, const Genetic& ob) {
+  if (ob.pop.size() > 0)
+    out << ob.pop.top();
+  return out;
 }
 
 /**
  * @brief     solves the board using a genetic algorithm
  */
-void Genetic::solve() {
+bool Genetic::solve() {
 //	const float mutation_chance = .01;
 
 	std::srand(std::time(0));
@@ -35,10 +41,15 @@ void Genetic::solve() {
       vector<int> vals(size);
 			for (int col = 0; col < size; ++col) {
         vals[col] = col+1;
-        // i do this method so that i can outright reduce h below 2*size
-        // rather than 3*size
-        std::random_shuffle(vals.begin(), vals.end());
 			}
+      std::random_shuffle(vals.begin(), vals.end());
+      for (int col = 0; col < size; ++col) {
+        if (orig.get(row, col) != 0) {
+          vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
+          vals.insert(vals.begin()+col, orig.get(row, col));
+          
+        }
+      }
       contents[row] = vals;
 		}
 		pop.emplace(contents);
@@ -48,6 +59,7 @@ void Genetic::solve() {
     breed();
     ++iters;
   }
+  return pop.top().H == 0;
 }
 
 vector<int> generate(int size) {

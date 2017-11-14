@@ -7,7 +7,9 @@ fi
 for size in $sizes; do
   files="$(ls tests/$size/)"
   for file in $files; do
-    echo "running test on tests/$size/$file"
+    echo "running AC3 test on tests/$size/$file"
     /usr/bin/time -f "%e" solver AC3 $size tests/$size/$file
+    echo "running Genetic test on tests/$size/$file"
+    /usr/bin/time -f "%e" solver Genetic $size tests/$size/$file
   done
 done

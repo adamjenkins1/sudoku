@@ -16,7 +16,8 @@ class Genetic {
     // the chance for mutation
     const double MUTATION_CHANCE = .01;
     Genetic(Board&);
-    void solve();
+    friend std::ostream& operator<<(std::ostream&, const Genetic&);
+    bool solve();
   private:
     // the original board
     Board orig;

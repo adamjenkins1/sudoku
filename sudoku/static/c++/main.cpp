@@ -29,9 +29,11 @@ int main(int argc, char **argv) {
 
   if (method == "AC3") {
     AC3 solver(size, board);
-    std::cout << solver.solve() << std::endl;
+    std::cerr << "is_solved: " << solver.solve() << std::endl;
     std::cout << solver;
   } else if (method == "Genetic") {
-    
+    Genetic genetic(board);
+    std::cerr << "is_solved: " << genetic.solve() << std::endl;
+    std::cout << genetic;
   }
 }

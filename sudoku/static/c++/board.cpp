@@ -35,6 +35,9 @@ std::ostream& operator<<(std::ostream& out, const Board& ob) {
  *            does the same thing as the extraction operator
  */
 void Board::print_board(std::ostream& out) const {
+#ifdef DEBUG
+  std::cerr << "H: " << H << "\n";
+#endif
   for (unsigned int row = 0; row < size; ++row) {
     for (unsigned int col = 0; col < size; ++col) {
       if (get(row, col) != 0)

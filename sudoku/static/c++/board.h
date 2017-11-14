@@ -13,6 +13,7 @@ class Board {
   public:
     Board(const std::vector<std::vector<int> >&);
     Board(int);
+    int get_size() const {return size; }
     void set(int, int, int);
     int get(int, int) const;
     std::vector<int> get_col(int) const;
