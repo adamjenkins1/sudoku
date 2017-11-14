@@ -10,11 +10,11 @@
 class Genetic {
   public:
     // the maximum number of iterations allowed before giving up
-    const int MAX_ITERS = 5000;
+    const int MAX_ITERS = 50000;
     // the starting population size
     const int POP_SIZE = 10;
     // the chance for mutation
-    const double MUTATION_CHANCE = .01;
+    const double MUTATION_CHANCE = .25;
     Genetic(Board&);
     friend std::ostream& operator<<(std::ostream&, const Genetic&);
     bool solve();

@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& out, const Board& ob) {
  */
 void Board::print_board(std::ostream& out) const {
 #ifdef DEBUG
-  std::cerr << "H: " << H << "\n";
+  std::cerr << "[AI] H: " << H << "\n";
 #endif
   for (unsigned int row = 0; row < size; ++row) {
     for (unsigned int col = 0; col < size; ++col) {
@@ -57,9 +57,10 @@ std::istream& operator>>(std::istream& in, Board& ob) {
   for (unsigned int row = 0; row < ob.size; ++row) {
     for (unsigned int col = 0; col < ob.size; ++col) {
       in >> val;
-      ob.set(row, col, val);
+      ob.board[row][col] = val;
     }
   }
+  ob.h();
   return in;
 }
 
@@ -146,6 +147,12 @@ bool all(std::vector<bool> vec) {
   return true;
 }
 
+void clear(std::vector<bool> vec) {
+  for (unsigned int i = 0; i < vec.size(); ++i) {
+    vec[i] = 0;
+  }
+}
+
 /**
  * @brief     calculates the H value for this board
  * @retur     a value, H, between [0, 3*sqrt(size)]
@@ -163,7 +170,7 @@ void Board::h() {
     }
     if (!all(rowset)) H++;
     if (!all(colset)) H++;
-    rowset.clear(); colset.clear();
+    clear(colset); clear(rowset);
   }
 
   std::vector<bool> block(size, 0);
@@ -177,7 +184,7 @@ void Board::h() {
         }
       }
       if (!all(block)) H++;
-      block.clear();
+      clear(block);
     }
   }
 }

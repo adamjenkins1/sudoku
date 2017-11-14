@@ -59,9 +59,15 @@ bool Genetic::solve() {
     breed();
     ++iters;
   }
+#ifdef DEBUG
+  std::cerr << "[GE] iters taken: " << iters << "\n";
+#endif
   return pop.top().H == 0;
 }
 
+/**
+ * @brief     return a list of indexes to swap
+ */
 vector<int> generate(int size) {
   int val;
   vector<int> vals;
@@ -80,6 +86,20 @@ void Genetic::breed() {
   Board board1 = pop.top(); pop.pop();
   Board board2 = pop.top(); pop.pop();
   board1.trade_rows(generate(size), board2);
+  mutate(board1); mutate(board2);
   pop.push(board1); pop.push(board2);
+}
+
+void Genetic::mutate(Board& board) {
+  if ((rand() % 100)/100 < MUTATION_CHANCE) {
+    int row = rand() % size;
+    int col1 = rand() % size;
+    int col2 = rand() % size;
+    int temp = board.get(row, col1);
+    if (orig.get(row, col1) == 0 && orig.get(row, col2) == 0) {
+      board.set(row, col1, board.get(row, col2));
+      board.set(row, col2, temp);
+    }
+  }
 }
 

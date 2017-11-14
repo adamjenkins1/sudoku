@@ -68,7 +68,7 @@ AC3::Variable::Variable(int size, int row, int col)
  * @brief     print the board
  */
 std::ostream& operator<<(std::ostream& out, const AC3& ob) {
-  out << ob.board << "\n";
+  out << ob.board;
   return out;
 }
 
@@ -77,7 +77,9 @@ std::ostream& operator<<(std::ostream& out, const AC3& ob) {
  */
 bool AC3::solve() {
   std::queue<Edge> q;
-
+#ifdef DEBUG
+  int compares = 0, guesses = 0, backtracks = 0;
+#endif
   //fill in queue with initial arcs
   for (auto var = vars.begin(); var != vars.end(); ++var) {
     for (auto edge = var->connections.begin(); edge != var->connections.end(); ++edge) {
@@ -94,6 +96,9 @@ bool AC3::solve() {
 
     //check if we need to guess
     if (q.empty()) {
+#ifdef DEBUG
+      ++guesses;
+#endif
       Variable *best_var = nullptr;
       int best_i;
       //get best unfinished var (smallest domain > 1)
@@ -130,13 +135,23 @@ bool AC3::solve() {
     }
     // if left didnt change then try the next edge
     if (!changed) continue;
-    
+#ifdef DEBUG
+    ++compares;
+#endif
     //if need to backtrack
     if (edge.left->domain.size() < 1) {
       if (bck.empty()) {
         //unsolvable
+#ifdef DEBUG
+        std::cerr << "[AC] comparisons: " << compares << std::endl;
+        std::cerr << "[AC] guesses: " << guesses << std::endl;
+        std::cerr << "[AC] back tracks: " << backtracks << std::endl;
+#endif
         return false;
       } else {
+#ifdef DEBUG
+        ++backtracks;
+#endif
         //backtrack:
 
         BackItem &bck_item = bck.top();
@@ -176,7 +191,11 @@ bool AC3::solve() {
     }
   }
   solved = is_solved();
-  board.set(0,0,board.get(0,0));
+#ifdef DEBUG
+        std::cerr << "[AC] comparisons: " << compares << std::endl;
+        std::cerr << "[AC] guesses: " << guesses << std::endl;
+        std::cerr << "[AC] back tracks: " << backtracks << std::endl;
+#endif
   return solved;
 }
 

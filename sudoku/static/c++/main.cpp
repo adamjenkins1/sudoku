@@ -26,14 +26,24 @@ int main(int argc, char **argv) {
   std::ifstream in(filename);
   Board board(size);
   in >> board;
-
+#ifdef DEBUG
+  std::cerr << "[AI] H: " << board.H << std::endl;
+#endif
   if (method == "AC3") {
     AC3 solver(size, board);
-    std::cerr << "is_solved: " << solver.solve() << std::endl;
+#ifdef DEBUG
+    std::cerr << "[AI] is_solved: " << solver.solve() << std::endl;
+#else
+    std::cerr << solver.solve() << std::endl;
+#endif
     std::cout << solver;
   } else if (method == "Genetic") {
     Genetic genetic(board);
-    std::cerr << "is_solved: " << genetic.solve() << std::endl;
+#ifdef DEBUG
+    std::cerr << "[AI] is_solved: " << genetic.solve() << std::endl;
+#else
+    std::cerr << genetic.solve() << std::endl;
+#endif
     std::cout << genetic;
   }
 }
