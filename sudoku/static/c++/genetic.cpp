@@ -29,8 +29,6 @@ std::ostream& operator<<(std::ostream& out, const Genetic& ob) {
  * @brief     solves the board using a genetic algorithm
  */
 bool Genetic::solve() {
-//	const float mutation_chance = .01;
-
 	std::srand(std::time(0));
 
 	//generate random population
@@ -72,8 +70,8 @@ vector<int> generate(int size) {
   int val;
   vector<int> vals;
   for (int i = 0; i < size/3; ++i) {
-    val = (rand()%size) + 1;
-    if (std::find(vals.begin(), vals.end(), val) != vals.end())
+    val = rand()%size;
+    if (std::find(vals.begin(), vals.end(), val) == vals.end())
       vals.push_back(val);
   }
   return vals;
