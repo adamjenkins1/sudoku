@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^solve/([A-Za-z0-9]+)/$', views.solve, name = 'solve'),
     url(r'^about/$', views.about, name = 'about'),
     url(r'^stats/$', views.stats, name = 'stats'),
+    url(r'^data/$', views.data, name = 'data'),
 ]

@@ -31,6 +31,9 @@ def stats(request):
     selected = 'stats'
     return render(request, 'stats.html', {'selected': selected})
 
+def data(request):
+    return render(request, 'data.html')
+
 def saveData(request, boardSize, diff):
     board = []
     board = request.POST.getlist('board[]')
