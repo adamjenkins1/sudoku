@@ -31,31 +31,24 @@ std::ostream& operator<<(std::ostream& out, const Genetic& ob) {
 bool Genetic::solve() {
 	std::srand(std::time(0));
 
-	//generate random population
-	for (unsigned int i = 0; i < POP_SIZE; ++i) {
-		vector<vector<int>> contents(size);
-		//generate random board
-		for (int row = 0; row < size; ++row) {
-      vector<int> vals(size);
-			for (int col = 0; col < size; ++col) {
-        vals[col] = col+1;
-			}
-      std::random_shuffle(vals.begin(), vals.end());
-      for (int col = 0; col < size; ++col) {
-        if (orig.get(row, col) != 0) {
-          vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
-          vals.insert(vals.begin()+col, orig.get(row, col));
-          
-        }
-      }
-      contents[row] = vals;
-		}
-		pop.emplace(contents);
-	}
+	generate_pop();
+
   unsigned int iters = 0;
+  unsigned int idle_iters = 0;
+  int best_h = pop.top().H;
+
   while (pop.top().H != 0 && iters < MAX_ITERS) {
+    if (pop.top().H < best_h) {
+      idle_iters = 0;
+      best_h = pop.top().H;
+    } else if (idle_iters >= MAX_IDLE_ITERS) {
+      pop = std::priority_queue<Board, std::vector<Board>, std::greater<Board> >();
+      generate_pop();
+      best_h = pop.top().H;
+    }
     breed();
     ++iters;
+    ++idle_iters;
   }
 #ifdef DEBUG
   std::cerr << "[GE] iters taken: " << iters << "\n";
@@ -94,8 +87,34 @@ void Genetic::breed() {
     pop.push(vals[i]);
 }
 
+/**
+ * @brief     generates the random population
+ */
+void Genetic::generate_pop() {
+  for (unsigned int i = 0; i < POP_SIZE; ++i) {
+    vector<vector<int>> contents(size);
+    //generate random board
+    for (int row = 0; row < size; ++row) {
+      vector<int> vals(size);
+      for (int col = 0; col < size; ++col) {
+        vals[col] = col+1;
+      }
+      std::random_shuffle(vals.begin(), vals.end());
+      for (int col = 0; col < size; ++col) {
+        if (orig.get(row, col) != 0) {
+          vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
+          vals.insert(vals.begin()+col, orig.get(row, col));
+          
+        }
+      }
+      contents[row] = vals;
+    }
+    pop.emplace(contents);
+  }
+}
+
 void Genetic::mutate(Board& board) {
-  if ((rand() % 100)/100 < MUTATION_CHANCE) {
+  if ((rand() % 100) < MUTATION_CHANCE) {
     int row = rand() % size;
     int col1 = rand() % size;
     int col2 = rand() % size;

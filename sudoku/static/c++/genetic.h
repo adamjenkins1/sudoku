@@ -11,6 +11,8 @@ class Genetic {
   public:
     // the maximum number of iterations allowed before giving up
     const unsigned int MAX_ITERS = 50000;
+    // the maximum number of iterations with no improvement in H before restarting
+    const unsigned int MAX_IDLE_ITERS = 200;
     // the starting population size
     const unsigned int POP_SIZE = 10;
     // the chance for mutation
@@ -28,6 +30,7 @@ class Genetic {
     void mutate(Board&);
     void breed();
     void bread() {breed(); }
+    void generate_pop();
 
 
 
