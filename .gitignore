@@ -1,5 +1,6 @@
 # c++ object files
 *.o
+*.d
 
 # AI executables
 solver
