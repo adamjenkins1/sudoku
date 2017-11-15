@@ -28,6 +28,8 @@ class Board {
     friend std::istream& operator>>(std::istream& in, Board& ob);
     void print_board(std::ostream& out) const;
     int H;
+    //whether it should use a alternate fitness function
+    static const bool USE_ALTERNATE_H = true;
   private:
     std::vector<std::vector<int> > board;
     unsigned int size;

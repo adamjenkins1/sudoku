@@ -155,37 +155,66 @@ void clear(std::vector<bool> vec) {
 
 /**
  * @brief     calculates the H value for this board
- * @retur     a value, H, between [0, 3*sqrt(size)]
+ * @return     a value, H, between [0, 3*sqrt(size)]
  */
 void Board::h() {
   H = 0;
-  //check to see if the rows and columns are all valid
-  std::vector<bool> rowset(size), colset(size);
-  for (unsigned int i = 0; i < size; ++i) {
-    for (unsigned int j = 0; j < size; ++j) {
-      if (board[i][j])
-        rowset[board[i][j]-1] = 1;
-      if (board[j][i])
-        colset[board[j][i]-1] = 1;
-    }
-    if (!all(rowset)) H++;
-    if (!all(colset)) H++;
-    std::fill(rowset.begin(), rowset.end(), false);
-    std::fill(colset.begin(), colset.end(), false);
-  }
-
-  std::vector<bool> block(size, 0);
-  int ssize = std::sqrt(size);
-  for (int brow = 0; brow < ssize; ++brow) {
-    for (int bcol = 0; bcol < ssize; ++bcol) {
-      for (int row = 0; row < ssize; ++row) {
-        for (int col = 0; col < ssize; ++col) {
-          if (board[brow*ssize+row][bcol*ssize+col])
-            block[board[brow*ssize+row][bcol*ssize+col]-1] = 1;
+  if (USE_ALTERNATE_H) { //this method counts collisions
+    for (unsigned int i = 0; i < size; ++i) {
+      for (unsigned int j = 0; j < size; ++j) {
+        for (unsigned int j1 = j + 1; j1 < size; ++j1) {
+          if (board[i][j] == board[i][j1])
+            H++; //collision in a row
+          if (board[j][i] == board[j1][i])
+            H++; //collision in a col
         }
       }
-      if (!all(block)) H++;
-      std::fill(block.begin(), block.end(), false);
+    }
+
+    std::vector<int> block(size, 0);
+    int ssize = std::sqrt(size);
+    for (int brow = 0; brow < ssize; ++brow) {
+      for (int bcol = 0; bcol < ssize; ++bcol) {
+        for (int row = 0; row < ssize; ++row) {
+          for (int col = 0; col < ssize; ++col) {
+            if (board[brow*ssize+row][bcol*ssize+col]) {
+              H += block[board[brow*ssize+row][bcol*ssize+col]-1];
+              block[board[brow*ssize+row][bcol*ssize+col]-1]++;
+            }
+          }
+        }
+        std::fill(block.begin(), block.end(), 0);
+      }
+    }
+  } else {
+    //check to see if the rows and columns are all valid
+    std::vector<bool> rowset(size), colset(size);
+    for (unsigned int i = 0; i < size; ++i) {
+      for (unsigned int j = 0; j < size; ++j) {
+        if (board[i][j])
+          rowset[board[i][j]-1] = 1;
+        if (board[j][i])
+          colset[board[j][i]-1] = 1;
+      }
+      if (!all(rowset)) H++;
+      if (!all(colset)) H++;
+      std::fill(rowset.begin(), rowset.end(), false);
+      std::fill(colset.begin(), colset.end(), false);
+    }
+
+    std::vector<bool> block(size, 0);
+    int ssize = std::sqrt(size);
+    for (int brow = 0; brow < ssize; ++brow) {
+      for (int bcol = 0; bcol < ssize; ++bcol) {
+        for (int row = 0; row < ssize; ++row) {
+          for (int col = 0; col < ssize; ++col) {
+            if (board[brow*ssize+row][bcol*ssize+col])
+              block[board[brow*ssize+row][bcol*ssize+col]-1] = 1;
+          }
+        }
+        if (!all(block)) H++;
+        std::fill(block.begin(), block.end(), false);
+      }
     }
   }
 }

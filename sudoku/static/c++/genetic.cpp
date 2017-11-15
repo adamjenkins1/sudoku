@@ -36,6 +36,12 @@ bool Genetic::solve() {
   unsigned int iters = 0;
   unsigned int idle_iters = 0;
   int best_h = pop.top().H;
+  Board best_board_ever = pop.top();
+  int best_h_ever = best_h;
+
+#ifdef DEBUG
+  std::cerr << "[GE] starting h: " << best_h_ever << "\n";
+#endif
 
   while (pop.top().H != 0 && iters < MAX_ITERS) {
     if (pop.top().H < best_h) {
@@ -47,11 +53,20 @@ bool Genetic::solve() {
       best_h = pop.top().H;
     }
     breed();
+    if (pop.top().H < best_h_ever) {
+      best_h_ever = pop.top().H;
+      best_board_ever = pop.top();
+    }
     ++iters;
     ++idle_iters;
   }
+
+  if (iters == MAX_ITERS) {
+    pop.push(best_board_ever);
+  }
 #ifdef DEBUG
   std::cerr << "[GE] iters taken: " << iters << "\n";
+  std::cerr << "[GE] lowest h found: " << best_h_ever << "\n";
 #endif
   return pop.top().H == 0;
 }
@@ -62,7 +77,8 @@ bool Genetic::solve() {
 vector<int> generate(int size) {
   int val;
   vector<int> vals;
-  for (int i = 0; i < size/3; ++i) {
+  int num_of_rows = size/3 == 1 ? 1 : rand()%(size/3 - 1) + 1;
+  for (int i = 0; i < num_of_rows; ++i) {
     val = rand()%size;
     if (std::find(vals.begin(), vals.end(), val) == vals.end())
       vals.push_back(val);
