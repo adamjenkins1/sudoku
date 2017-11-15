@@ -65,10 +65,8 @@ def solve(request, algorithm):
         return HttpResponse('Error while calling algorithm', status = '500')
 
     out = out.decode()[:-2]
+    solved = out[0]
     print(out)
-    if(out[0] != '1'):
-        print('solver encoutered an error')
-        return HttpResponse('Solver unable to find puzzle solution', status = '500')
 
     solvedBoard = out[1:]
     solvedBoard = solvedBoard.strip()
@@ -76,4 +74,7 @@ def solve(request, algorithm):
     solvedBoard = list(map(int, solvedBoard))
     solvedBoardJson = json.dumps(solvedBoard)
 
-    return HttpResponse(solvedBoardJson, content_type = 'application/json')
+    if(out[0] != '1'):
+        return HttpResponse(solvedBoardJson, content_type = 'application/json', status = '400')
+    else:
+        return HttpResponse(solvedBoardJson, content_type = 'application/json')

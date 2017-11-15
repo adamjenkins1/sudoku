@@ -32,17 +32,17 @@ int main(int argc, char **argv) {
   if (method == "AC3") {
     AC3 solver(size, board);
 #ifdef DEBUG
-    std::cerr << "[AI] is_solved: " << solver.solve() << std::endl;
+    std::cout << "[AI] is_solved: " << solver.solve() << std::endl;
 #else
-    std::cerr << solver.solve() << std::endl;
+    std::cout << solver.solve() << std::endl;
 #endif
     std::cout << solver;
   } else if (method == "Genetic") {
     Genetic genetic(board);
 #ifdef DEBUG
-    std::cerr << "[AI] is_solved: " << genetic.solve() << std::endl;
+    std::cout << "[AI] is_solved: " << genetic.solve() << std::endl;
 #else
-    std::cerr << genetic.solve() << std::endl;
+    std::cout << genetic.solve() << std::endl;
 #endif
     std::cout << genetic;
   }

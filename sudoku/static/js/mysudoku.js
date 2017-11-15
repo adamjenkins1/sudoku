@@ -84,8 +84,12 @@ function tryGeneratingBoard() {
       })
     .fail(function(xhr, status, error) {
       console.log(xhr);
-      console.log(xhr.responseText);
-      console.log(error);
+      if(xhr.status == 400) {
+        mySudokuJS.setBoard(xhr.responseJSON);
+        alert('Error: solver only able to find partial solution using ' + algorithm + ' algorithm.');
+        $('#refreshButton').show();
+        $('#solveButton').hide();
+      }
     });
   });
   return true;
