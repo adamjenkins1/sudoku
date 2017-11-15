@@ -23,6 +23,7 @@ class Board {
     void trade_cols(std::vector<int>, Board&);
     void trade_rows(std::vector<int>, Board&);
     friend bool operator<(const Board&, const Board&);
+    friend bool operator>(const Board&, const Board&);
     friend std::ostream& operator<<(std::ostream& out, const Board& ob);
     friend std::istream& operator>>(std::istream& in, Board& ob);
     void print_board(std::ostream& out) const;

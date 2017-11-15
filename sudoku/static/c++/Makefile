@@ -3,15 +3,21 @@
 
 DEBUG=
 #DEBUG=-DDEBUG
-CXX=c++
-CXXFLAGS=-std=c++11 -pedantic -Wall -Werror -g $(DEBUG)
+CXX=g++
+CXXFLAGS=-std=c++11 -pedantic -Wall -Werror -g $(DEBUG) -MMD
 SOURCE=$(wildcard *.cpp)
-OBJECTS=$(SOURCE:.cpp=.o)
+OBJECTS=$(SOURCE:%.cpp=%.o)
 EXE=solver
 
+DEPS=$(OBJECTS:%.o=%.d)
 
 EXE: $(OBJECTS)
 	$(CXX) $(OBJECTS) -o $(EXE)
 
+OBJECTS: $(SOURCE)
+	$(CC) $(CXXFLAGS) -MM -MF $(patsubst %.o,%.d,$@) -o $@ $<
+
+-include $(DEPS)
+
 clean:
-	rm -f $(OBJECTS) $(EXE)
+	rm -f $(OBJECTS) $(EXE) $(DEPS)

@@ -194,6 +194,13 @@ void Board::h() {
  * @brief     compare operator for use with priority_queue
  */
 bool operator<(const Board& lhs, const Board& rhs) {
+  return lhs.H < rhs.H;
+}
+
+/**
+ * @brief     compare operator for use with priority_queue
+ */
+bool operator>(const Board& lhs, const Board& rhs) {
   return lhs.H > rhs.H;
 }
 

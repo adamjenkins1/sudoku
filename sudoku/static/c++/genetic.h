@@ -10,11 +10,11 @@
 class Genetic {
   public:
     // the maximum number of iterations allowed before giving up
-    const int MAX_ITERS = 50000;
+    const unsigned int MAX_ITERS = 50000;
     // the starting population size
-    const int POP_SIZE = 10;
+    const unsigned int POP_SIZE = 10;
     // the chance for mutation
-    const double MUTATION_CHANCE = .25;
+    const int MUTATION_CHANCE = 25;
     Genetic(Board&);
     friend std::ostream& operator<<(std::ostream&, const Genetic&);
     bool solve();
@@ -24,7 +24,7 @@ class Genetic {
     // the size of the board
     int size;
     // the population
-    std::priority_queue<Board> pop;
+    std::priority_queue<Board, std::vector<Board>, std::greater<Board> > pop;
     void mutate(Board&);
     void breed();
     void bread() {breed(); }

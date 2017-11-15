@@ -32,7 +32,7 @@ bool Genetic::solve() {
 	std::srand(std::time(0));
 
 	//generate random population
-	for (int i = 0; i < POP_SIZE; ++i) {
+	for (unsigned int i = 0; i < POP_SIZE; ++i) {
 		vector<vector<int>> contents(size);
 		//generate random board
 		for (int row = 0; row < size; ++row) {
@@ -52,7 +52,7 @@ bool Genetic::solve() {
 		}
 		pop.emplace(contents);
 	}
-  int iters = 0;
+  unsigned int iters = 0;
   while (pop.top().H != 0 && iters < MAX_ITERS) {
     breed();
     ++iters;
@@ -81,11 +81,17 @@ vector<int> generate(int size) {
  * @brief     breeds the top two boards together and puts them back in the population
  */
 void Genetic::breed() {
-  Board board1 = pop.top(); pop.pop();
-  Board board2 = pop.top(); pop.pop();
-  board1.trade_rows(generate(size), board2);
-  mutate(board1); mutate(board2);
-  pop.push(board1); pop.push(board2);
+  if (pop.size() < POP_SIZE/3+1) return;
+  Board board = pop.top(); pop.pop();
+  vector<Board> vals;
+  for (unsigned int i = 0; i < POP_SIZE/3; ++i) {
+    Board man = board, fem = pop.top(); pop.pop();
+    man.trade_rows(generate(size), fem);
+    mutate(man); mutate(fem);
+    vals.push_back(man); vals.push_back(fem);
+  }
+  for (unsigned int i = 0; i < vals.size(); ++i)
+    pop.push(vals[i]);
 }
 
 void Genetic::mutate(Board& board) {
