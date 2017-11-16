@@ -14,7 +14,7 @@ using std::vector;
 /**
  * @brief     constructor for the Genetic Algorithm takes the original board as input
  */
-Genetic::Genetic(Board& board)
+Genetic::Genetic(const Board& board)
   : orig(board)
   , size(orig.get_size()) {
 }

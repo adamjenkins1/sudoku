@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
   std::cerr << "[AI] H: " << board.H << std::endl;
 #endif
   if (method == "AC3") {
-    AC3 solver(size, board);
+    AC3 solver(board);
 #ifdef DEBUG
     std::cout << "[AI] is_solved: " << solver.solve() << std::endl;
 #else

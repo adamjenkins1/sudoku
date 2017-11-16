@@ -13,7 +13,7 @@
 
 class AC3 {
   public:
-    AC3(int, Board);
+    AC3(const Board&);
     friend std::ostream& operator<<(std::ostream&, const AC3&);
     bool solve();
   private:
@@ -23,7 +23,7 @@ class AC3 {
       // the variables that are connected by this edge
       Variable *left, *right;
     };
-    // struct representing a variable, its relations and possible values
+  // struct representing a variable, its relations and possible values
     struct Variable {
       Variable(int, int, int);
       Variable(int size) : Variable(size, 0, 0) {}

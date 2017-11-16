@@ -14,8 +14,8 @@
  * @brief     Constructor
  * @param     size:       the size of the board
 */
-AC3::AC3(int size, Board board)
-  : size(size)
+AC3::AC3(const Board& board)
+  : size(board.get_size())
   , vars(size*size, size)
   , board(board) {
   for (int row = 0; row < size; ++row) {

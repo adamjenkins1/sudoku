@@ -17,7 +17,7 @@ class Genetic {
     const unsigned int POP_SIZE = 100;
     // the chance for mutation
     const int MUTATION_CHANCE = 25;
-    Genetic(Board&);
+    Genetic(const Board&);
     friend std::ostream& operator<<(std::ostream&, const Genetic&);
     bool solve();
   private:
