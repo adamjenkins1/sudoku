@@ -18,20 +18,16 @@
           <ul class="nav navbar-nav">
             {% if selected == 'home' %}
             <li class="active"><a href="/">Home</a></li>
-            {% else %}
-            <li><a href="/">Home</a></li>
-            {% endif %}
-
-            {% if selected == 'about' %}
-            <li class="active"><a href="/about">About</a></li>
-            {% else %}
             <li><a href="/about">About</a></li>
-            {% endif %}
-
-            {% if selected == 'stats' %}
-            <li class="active"><a href="/stats">Statistics</a></li>
-            {% else %}
             <li><a href="/stats">Statistics</a></li>
+            {% elif selected == 'about' %}
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/about">About</a></li>
+            <li><a href="/stats">Statistics</a></li>
+            {% elif selected == 'stats' %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li class="active"><a href="/stats">Statistics</a></li>
             {% endif %}
           </ul>
           {% if selected == 'home' %}
@@ -46,18 +42,45 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Board Size <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
+                {% if boardSize == '4' %}
+                <li class="active"><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
                 <li><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
                 <li><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                {% elif boardSize == '9' %}
+                <li><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
+                <li class="active"><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
+                <li><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                {% elif boardSize == '16' %}
+                <li><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
+                <li><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
+                <li class="active"><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                {% endif %}
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Difficulty <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/{{boardSize}}/e">Easy</a></li>
+                {% if shortDifficulty == 'e' %}
+                <li class="active"><a href="/{{boardSize}}/e">Easy</a></li>
                 <li><a href="/{{boardSize}}/m">Medium</a></li>
                 <li><a href="/{{boardSize}}/h">Hard</a></li>
                 <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                {% elif shortDifficulty == 'm' %}
+                <li><a href="/{{boardSize}}/e">Easy</a></li>
+                <li class="active"><a href="/{{boardSize}}/m">Medium</a></li>
+                <li><a href="/{{boardSize}}/h">Hard</a></li>
+                <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                {% elif shortDifficulty == 'h' %}
+                <li><a href="/{{boardSize}}/e">Easy</a></li>
+                <li><a href="/{{boardSize}}/m">Medium</a></li>
+                <li class="active"><a href="/{{boardSize}}/h">Hard</a></li>
+                <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                {% elif shortDifficulty == 'vh' %}
+                <li><a href="/{{boardSize}}/e">Easy</a></li>
+                <li><a href="/{{boardSize}}/m">Medium</a></li>
+                <li><a href="/{{boardSize}}/h">Hard</a></li>
+                <li class="active"><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                {% endif %}
               </ul>
             </li>
           </ul>

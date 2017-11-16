@@ -86,7 +86,7 @@ function tryGeneratingBoard() {
       console.log(xhr);
       if(xhr.status == 400) {
         mySudokuJS.setBoard(xhr.responseJSON);
-        alert('Error: solver only able to find partial solution using ' + algorithm + ' algorithm.');
+        alert('Error: solver unable to find solution using ' + algorithm + ' algorithm.');
         $('#refreshButton').show();
         $('#solveButton').hide();
       }
