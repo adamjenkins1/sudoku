@@ -14,10 +14,7 @@ DEPS=$(OBJECTS:%.o=%.d)
 EXE: $(OBJECTS)
 	$(CXX) $(OBJECTS) -o $(EXE)
 
-OBJECTS: $(SOURCE)
-	$(CC) $(CXXFLAGS) -MM -MF $(patsubst %.o,%.d,$@) -o $@ $<
-
--include $(DEPS)
+include $(DEPS)
 
 clean:
 	rm -f $(OBJECTS) $(EXE) $(DEPS)
