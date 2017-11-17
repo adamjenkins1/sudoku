@@ -24,20 +24,33 @@ checkForErrors(error)
 out = out.strip()
 files = out.split('\n')
 
+algorithms = ['AC3', 'Genetic']
 for filename in files:
   args = filename.split('_')
-  start = time()
-  p = subprocess.Popen(['./static/c++/solver', 'AC3', args[0], 'static/data/' + filename], 
-      stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-  real = time() - start
-  out, error = p.communicate()
-  out = out.decode()[:-2]
-  error = error.decode()[:-1]
-  checkForErrors(error)
+  for method in algorithms:
+    # uncomment these lines if you want to run genetic algorithm
+    if(method == 'Genetic'):
+      break
+    start = time()
+    p = subprocess.Popen(['./static/c++/solver', method, args[0], 'static/data/' + filename], 
+        stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    real = time() - start
+    print('running ./static/c++/solver ' + method + ' ' + args[0] + ' static/data/' + filename)
+    out, error = p.communicate()
+    out = out.decode()[:-2]
+    error = error.decode()[:-1]
+    checkForErrors(error)
 
-  if(out[0] == '1'):
-    newRow = SudokuData()
-    newRow.size = int(args[0])
-    newRow.difficulty = args[1]
-    newRow.ac3Time = real*1000
-    newRow.save()
+    if(out[0] == '1'):
+      print('solution found, adding to database...')
+      newRow = SudokuData()
+      newRow.size = int(args[0])
+      newRow.difficulty = args[1]
+      newRow.time = real*1000
+      newRow.algorithm = method
+      newRow.save()
+    else:
+      print('solution not found, excluding from database...')
+
+    if(filename != files[-1]):
+      print()
