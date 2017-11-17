@@ -11,13 +11,18 @@ EXE=solver
 
 DEPS=$(OBJECTS:%.o=%.d)
 
-EXE: $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(EXE)
+all: EXE
 
-OBJECTS: $(SOURCE)
-	$(CC) $(CXXFLAGS) -MM -MF $(patsubst %.o,%.d,$@) -o $@ $<
-
--include $(DEPS)
+rebuild: clean all
 
 clean:
 	rm -f $(OBJECTS) $(EXE) $(DEPS)
+
+EXE: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $(EXE)
+
+%.o: %.c
+	$(CXX) -c $< -o $@
+
+-include $(DEPS)
+
