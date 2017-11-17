@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-
+#define DEBUG
 using std::rand;
 using std::vector;
 
@@ -29,9 +29,9 @@ std::ostream& operator<<(std::ostream& out, const Genetic& ob) {
  * @brief     solves the board using a genetic algorithm
  */
 bool Genetic::solve() {
-	std::srand(std::time(0));
+  std::srand(std::time(0));
 
-	generate_pop();
+  generate_pop();
 
   unsigned int iters = 0;
   unsigned int idle_iters = 0;
@@ -108,24 +108,7 @@ void Genetic::breed() {
  */
 void Genetic::generate_pop() {
   for (unsigned int i = 0; i < POP_SIZE; ++i) {
-    vector<vector<int>> contents(size);
-    //generate random board
-    for (int row = 0; row < size; ++row) {
-      vector<int> vals(size);
-      for (int col = 0; col < size; ++col) {
-        vals[col] = col+1;
-      }
-      std::random_shuffle(vals.begin(), vals.end());
-      for (int col = 0; col < size; ++col) {
-        if (orig.get(row, col) != 0) {
-          vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
-          vals.insert(vals.begin()+col, orig.get(row, col));
-          
-        }
-      }
-      contents[row] = vals;
-    }
-    pop.emplace(contents);
+    pop.push(Board::generate_rand(orig));
   }
 }
 

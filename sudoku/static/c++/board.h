@@ -27,6 +27,7 @@ class Board {
     friend std::ostream& operator<<(std::ostream& out, const Board& ob);
     friend std::istream& operator>>(std::istream& in, Board& ob);
     void print_board(std::ostream& out) const;
+    static Board generate_rand(Board& board);
     int H;
     //whether it should use a alternate fitness function
     static const bool USE_ALTERNATE_H = true;

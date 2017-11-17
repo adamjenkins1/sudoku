@@ -64,6 +64,31 @@ std::istream& operator>>(std::istream& in, Board& ob) {
   return in;
 }
 
+/**
+ * @brief     generates a randomized board that respects the values of orig
+ */
+Board Board::generate_rand(Board& orig) {
+  int size = orig.get_size();
+  Board board(size);
+
+  for (int row = 0; row < size; ++row) {
+    std::vector<int> &vals = board.board[row];
+    for (int col = 0; col < size; ++col) {
+      vals[col] = col+1;
+    }
+    std::random_shuffle(vals.begin(), vals.end());
+    for (int col = 0; col < size; ++col) {
+      if (orig.get(row, col) != 0) {
+        vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
+        vals.insert(vals.begin()+col, orig.get(row, col));
+      }
+    }
+  }
+
+  board.h();
+  return board;
+}
+
 void Board::set(int row, int col, int val) {
   board[row][col] = val;
   h();
