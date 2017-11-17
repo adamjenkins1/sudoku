@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
-#define DEBUG
+//#define DEBUG
 using std::rand;
 using std::vector;
 
