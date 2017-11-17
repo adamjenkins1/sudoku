@@ -11,10 +11,12 @@ EXE=solver
 
 DEPS=$(OBJECTS:%.o=%.d)
 
-EXE: $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(EXE)
 
-include $(DEPS)
+rebuild: clean all
 
 clean:
 	rm -f $(OBJECTS) $(EXE) $(DEPS)
+
+EXE: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $(EXE)
+
