@@ -11,6 +11,7 @@ EXE=solver
 
 DEPS=$(OBJECTS:%.o=%.d)
 
+all: EXE
 
 rebuild: clean all
 
@@ -19,4 +20,9 @@ clean:
 
 EXE: $(OBJECTS)
 	$(CXX) $(OBJECTS) -o $(EXE)
+
+%.o: %.c
+	$(CXX) -c $< -o $@
+
+-include $(DEPS)
 
