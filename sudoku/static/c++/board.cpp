@@ -71,16 +71,26 @@ Board Board::generate_rand(Board& orig) {
   int size = orig.get_size();
   Board board(size);
 
+  std::vector<int> vals;
   for (int row = 0; row < size; ++row) {
-    std::vector<int> &vals = board.board[row];
+    vals.resize(size);
     for (int col = 0; col < size; ++col) {
       vals[col] = col+1;
     }
-    std::random_shuffle(vals.begin(), vals.end());
+    //remove all taken values
     for (int col = 0; col < size; ++col) {
       if (orig.get(row, col) != 0) {
         vals.erase(std::find(vals.begin(), vals.end(), orig.get(row, col)));
-        vals.insert(vals.begin()+col, orig.get(row, col));
+      }
+    }
+    int val_i = 0; //what we'll insert at next available space
+    std::random_shuffle(vals.begin(), vals.end());
+    for (int col = 0; col < size; ++col) {
+      if (orig.get(row, col) != 0) {
+        board.board[row][col] = orig.get(row, col);
+      } else {
+        board.board[row][col] = vals[val_i];
+        val_i++;
       }
     }
   }
