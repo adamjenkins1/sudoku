@@ -91,16 +91,30 @@ vector<int> generate(int size) {
  */
 void Genetic::breed() {
   if (pop.size() < POP_SIZE/3+1) return;
-  Board board = pop.top(); pop.pop();
   vector<Board> vals;
   for (unsigned int i = 0; i < POP_SIZE/3; ++i) {
-    Board man = board, fem = pop.top(); pop.pop();
-    man.trade_rows(generate(size), fem);
-    mutate(man); mutate(fem);
-    vals.push_back(man); vals.push_back(fem);
+    vals.push_back(pop.top()); pop.pop();
   }
-  for (unsigned int i = 0; i < vals.size(); ++i)
-    pop.push(vals[i]);
+  for (unsigned int i = 0; i < vals.size(); ++i) {
+    for (unsigned int j = 0; j < vals.size(); ++j) {
+      Board man = vals[i], fem = vals[j];
+      man.trade_rows(generate(size), fem);
+      mutate(man); mutate(fem);
+      pop.push(man); pop.push(fem);
+    }
+  }
+  cull();
+}
+
+void Genetic::cull() {
+  std::priority_queue<Board, std::vector<Board>, std::greater<Board> > tmp;
+  for (unsigned int i = 0; i < POP_SIZE; ++i) {
+    tmp.push(pop.top()); pop.pop();
+  }
+  pop = std::priority_queue<Board, std::vector<Board>, std::greater<Board> >();
+  for (unsigned int i = 0; i < POP_SIZE; ++i) {
+    pop.push(tmp.top()); tmp.pop();
+  }
 }
 
 /**
