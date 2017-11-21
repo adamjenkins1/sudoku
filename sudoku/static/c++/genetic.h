@@ -16,7 +16,7 @@ class Genetic {
     // the starting population size
     const unsigned int POP_SIZE = 100;
     // the chance for mutation
-    const int MUTATION_CHANCE = 25;
+    const double MUTATION_CHANCE = 0.25;
     Genetic(const Board&);
     friend std::ostream& operator<<(std::ostream&, const Genetic&);
     bool solve();
