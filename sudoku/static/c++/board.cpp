@@ -98,6 +98,13 @@ int Board::get(int row, int col) const {
   return board[row][col];
 }
 
+void Board::swap(int row1, int col1, int row2, int col2) {
+  int val = get(row1, col1);
+  board[row1][col1] = get(row2, col2);
+  board[row2][col2] = val;
+  h();
+}
+
 /**
  * @brief     gets the values from a column
  */

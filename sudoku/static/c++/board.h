@@ -16,6 +16,7 @@ class Board {
     int get_size() const {return size; }
     void set(int, int, int);
     int get(int, int) const;
+    void swap(int, int, int, int);
     std::vector<int> get_col(int) const;
     std::vector<int> get_row(int) const;
     void set_col(int, const std::vector<int>&);
