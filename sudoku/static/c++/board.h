@@ -7,6 +7,8 @@
 #include <vector>
 #include <iostream>
 
+#define USE_ALTERNATE_H true
+
 //this class just holds boards for the genetic algorithm to play with
 
 class Board {
@@ -31,7 +33,6 @@ class Board {
     static Board generate_rand(Board& board);
     int H;
     //whether it should use a alternate fitness function
-    static const bool USE_ALTERNATE_H = true;
   private:
     std::vector<std::vector<int> > board;
     unsigned int size;

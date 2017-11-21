@@ -113,7 +113,7 @@ void Genetic::generate_pop() {
 }
 
 void Genetic::mutate(Board& board) {
-  if (rand()/RAND_MAX < MUTATION_CHANCE) {
+  if ((double)rand()/RAND_MAX < MUTATION_CHANCE) {
     int row = rand() % size;
     int col1 = rand() % size;
     int col2 = rand() % size;

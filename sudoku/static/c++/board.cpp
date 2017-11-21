@@ -187,7 +187,6 @@ void clear(std::vector<bool> vec) {
 
 /**
  * @brief     calculates the H value for this board
- * @return     a value, H, between [0, 3*sqrt(size)]
  */
 void Board::h() {
   H = 0;
