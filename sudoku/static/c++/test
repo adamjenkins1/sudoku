@@ -11,5 +11,7 @@ for size in $sizes; do
     /usr/bin/time -f "%e" solver AC3 $size tests/$size/$file
     echo "running Genetic test on tests/$size/$file"
     /usr/bin/time -f "%e" solver Genetic $size tests/$size/$file
+    echo "running Hill test on tests/$size/$file"
+    /usr/bin/time -f "%e" solver Hill $size tests/$size/$file
   done
 done

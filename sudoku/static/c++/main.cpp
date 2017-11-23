@@ -3,6 +3,7 @@
 //11-01-2017
 #include "ac3.h"
 #include "genetic.h"
+#include "hill.h"
 #include "board.h"
 #include <iostream>
 #include <fstream>
@@ -13,7 +14,7 @@ int main(int argc, char **argv) {
     return 1;
   }
   std::string method = argv[1];
-  if (method != "AC3" && method != "Genetic") {
+  if (method != "AC3" && method != "Genetic" && method != "Hill") {
     std::cerr << "[AI] error: invalid method type" << std::endl;
     return 3;
   }
@@ -34,5 +35,9 @@ int main(int argc, char **argv) {
     Genetic genetic(board);
     std::cout << genetic.solve() << std::endl;
     std::cout << genetic;
+  } else if (method == "Hill") {
+    Hill hill(board);
+    std::cout << hill.solve() << std::endl;
+    std::cout << hill;
   }
 }
