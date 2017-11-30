@@ -85,9 +85,10 @@ def solve(request, algorithm, difficulty):
     if(out[0] != '1'):
         return HttpResponse(solvedBoardJson, content_type = 'application/json', status = '400')
 
-    newRow = SudokuData.objects.create()
+    newRow = SudokuData()
     newRow.algorithm = algorithm
     newRow.size = boardSize
     newRow.time = real*1000
     newRow.difficulty = difficulty
+    newRow.save()
     return HttpResponse(solvedBoardJson, content_type = 'application/json')
