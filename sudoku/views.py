@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from .models import SudokuData
 import json, subprocess, os
 from time import strftime, gmtime, time
 
@@ -46,7 +47,7 @@ def saveData(request, boardSize, diff):
     
     return HttpResponse()
 
-def solve(request, algorithm):
+def solve(request, algorithm, difficulty):
     initialBoard = []
     initialBoard = request.POST.getlist('board[]')
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -83,5 +84,10 @@ def solve(request, algorithm):
 
     if(out[0] != '1'):
         return HttpResponse(solvedBoardJson, content_type = 'application/json', status = '400')
-    else:
-        return HttpResponse(solvedBoardJson, content_type = 'application/json')
+
+    newRow = SudokuData.objects.create()
+    newRow.algorithm = algorithm
+    newRow.size = boardSize
+    newRow.time = real*1000
+    newRow.difficulty = difficulty
+    return HttpResponse(solvedBoardJson, content_type = 'application/json')

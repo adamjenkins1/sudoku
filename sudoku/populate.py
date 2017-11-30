@@ -29,8 +29,8 @@ for filename in files:
   args = filename.split('_')
   for method in algorithms:
     # comment out these lines if you want to run genetic algorithm
-    if(method == 'Genetic'):
-      break
+    #if(method == 'Genetic'):
+    #  break
     start = time()
     p = subprocess.Popen(['./static/c++/solver', method, args[0], 'static/data/' + filename], 
         stdout = subprocess.PIPE, stderr = subprocess.PIPE)
