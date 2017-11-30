@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*c6j+z@+)x3s&gu!kfh)@4=-(8!^y&8(a0b4m%fafef9x@c%$3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '192.168.1.23', '104.196.49.46', '10.142.0.2']
+
+ALLOWED_HOSTS = ['localhost', 'sudoku.divisionc.com']
 
 
 # Application definition

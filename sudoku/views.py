@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-import json, subprocess
+import json, subprocess, os
 from time import strftime, gmtime, time
 
 def index(request, boardSize, diff):
@@ -16,6 +16,7 @@ def index(request, boardSize, diff):
         difficulty = 'very hard'
     else:
         difficulty = diff
+
 
     return render(request, 'index.html', 
         {'selected': selected, 
@@ -38,7 +39,9 @@ def saveData(request, boardSize, diff):
     board = []
     board = request.POST.getlist('board[]')
     filename = boardSize + '_' + diff + '_' + strftime('%Y-%m-%d_%H:%M:%S', gmtime()) + '.txt'
-    with open('sudoku/static/data/' + filename, 'w') as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    staticPath = dir_path + '/static/'
+    with open(staticPath + 'data/' + filename, 'w') as f:
         f.write(' '.join(board))
     
     return HttpResponse()
@@ -46,7 +49,11 @@ def saveData(request, boardSize, diff):
 def solve(request, algorithm):
     initialBoard = []
     initialBoard = request.POST.getlist('board[]')
-    with open('sudoku/static/c++/tempgrid', 'w') as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    tempfilePath = dir_path + '/static/c++/tempgrid'
+    staticPath = dir_path + '/static/'
+
+    with open(tempfilePath, 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
 
@@ -54,7 +61,7 @@ def solve(request, algorithm):
         return HttpResponse('Chosen algorithm not in supported algorithms', status = '400')
 
     start = time()
-    p = subprocess.Popen(['./sudoku/static/c++/solver', algorithm, str(boardSize), 'sudoku/static/c++/tempgrid'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen([staticPath + 'c++/solver', algorithm, str(boardSize), tempfilePath], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     real = time() - start
     print(real)
     out, error = p.communicate()
