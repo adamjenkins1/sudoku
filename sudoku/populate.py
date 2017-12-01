@@ -28,9 +28,8 @@ algorithms = ['AC3', 'Genetic']
 for filename in files:
   args = filename.split('_')
   for method in algorithms:
-    # comment out these lines if you want to run genetic algorithm
-    #if(method == 'Genetic'):
-    #  break
+    if(method == 'Genetic' and args[0] != '4'):
+      break
     start = time()
     p = subprocess.Popen(['./static/c++/solver', method, args[0], 'static/data/' + filename], 
         stdout = subprocess.PIPE, stderr = subprocess.PIPE)

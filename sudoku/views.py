@@ -31,7 +31,7 @@ def about(request):
 
 def stats(request):
     selected = 'stats'
-    data = SudokuData.objects.all().order_by('time')
+    data = SudokuData.objects.all().order_by('algorithm', '-size')
     return render(request, 'stats.html', {'selected': selected, 'data': data})
 
 def data(request):
