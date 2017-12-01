@@ -5,7 +5,35 @@
 {% block content %}
 
 <div class="container">
-  <h3>Some cool R stuff will go here</h3>
+  <h3>Relevant Statistics</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Algorithm</th>
+        <th scope="col">Size</th>
+        <th scope="col">Difficulty</th>
+        <th scope="col">Execution time (ms)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr>
+        <td>{{row.algorithm}}</td>
+        <td>{{row.size}}</td>
+        {% if row.difficulty == 'e' %}
+        <td>easy</td>
+        {% elif row.difficulty == 'm' %}
+        <td>medium</td>
+        {% elif row.difficulty == 'h' %}
+        <td>hard</td>
+        {% elif row.difficulty == 'vh' %}
+        <td>very hard</td>
+        {% endif %}
+        <td>{{row.time}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div> <!-- /container -->
 
 {% endblock %}

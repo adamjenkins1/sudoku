@@ -9,6 +9,8 @@ PORT="8000"
 
 #run server
 run: solver pyreqs
+	./manage.py makemigrations
+	./manage.py migrate --run-syncdb
 	./manage.py runserver $(PORT)
 
 #make solver
