@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 from .models import SudokuData
 import json, subprocess, os
 from time import strftime, gmtime, time
@@ -32,11 +33,25 @@ def about(request):
 def stats(request):
     selected = 'stats'
     #data = SudokuData.objects.all().order_by('algorithm', '-size')
-    data = SudokuData.objects.all().order_by('-id')
-    return render(request, 'stats.html', {'selected': selected, 'data': data})
+    #data = SudokuData.objects.all().order_by('-id')
+    #return render(request, 'stats.html', {'selected': selected, 'data': data})
+    return render(request, 'stats.html', {'selected': selected})
 
 def data(request):
     return render(request, 'data.html')
+
+def jsonData(request):
+    data = SudokuData.objects.all().order_by('id')
+    dictionaries = {}
+    dictionaries['rows'] = []
+
+    i = 0
+    for row in data:
+        dictionaries['rows'].append(row.as_dict())
+        i += 1
+
+    return JsonResponse(dictionaries)
+    
 
 def saveData(request, boardSize, diff):
     board = []

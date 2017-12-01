@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^about/$', views.about, name = 'about'),
     url(r'^stats/$', views.stats, name = 'stats'),
     url(r'^data/$', views.data, name = 'data'),
+    url(r'^jsondata/$', views.jsonData, name = 'jsondata'),
 ]

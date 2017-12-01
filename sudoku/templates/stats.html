@@ -4,7 +4,7 @@
 {% block title %}Statistics{% endblock %}
 {% block content %}
 
-<div class="container">
+<div class="container" id="app">
   <h3>Relevant Statistics</h3>
   <table class="table">
     <thead>
@@ -15,25 +15,23 @@
         <th scope="col">Execution time (ms)</th>
       </tr>
     </thead>
-    <tbody>
-      {% for row in data %}
-      <tr>
-        <td>{{row.algorithm}}</td>
-        <td>{{row.size}}</td>
-        {% if row.difficulty == 'e' %}
-        <td>easy</td>
-        {% elif row.difficulty == 'm' %}
-        <td>medium</td>
-        {% elif row.difficulty == 'h' %}
-        <td>hard</td>
-        {% elif row.difficulty == 'vh' %}
-        <td>very hard</td>
-        {% endif %}
-        <td>{{row.time}}</td>
+    {% verbatim %}
+    <tbody v-for="row in sudokuDataList">
+      <tr v-for="r in row">
+        <td>{{r.algorithm}}</td>
+        <td>{{r.size}}</td>
+        <td>{{r.difficulty}}</td>
+        <td>{{r.time}}</td>
       </tr>
-      {% endfor %}
+      {% endverbatim %}
     </tbody>
   </table>
 </div> <!-- /container -->
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/vue.js' %}"></script>
+<script src="{% static 'js/canvasjs.min.js' %}"></script>
+<script src="{% static 'js/stats.js' %}"></script>
 {% endblock %}
