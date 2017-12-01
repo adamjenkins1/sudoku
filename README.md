@@ -13,9 +13,11 @@
     (current directory) in your PATH.
 
 ## Running the project
-* To run this project, fork and clone the git repository, and type `make run PORT=<port>`.
-    This will compile the C++ program required for running the algorithms and start the
-    Django web server. If no port is specified, Django will start the web server on port 8000.
+* To run this project, first fork and clone the git repository. To run this project locally, make sure to set 
+  `DEBUG = True` in `project/settings.py`, otherwise the Django web server will not serve the 
+  required static files. Once that has been changed, type make run PORT=<port>. This will compile 
+  the C++ program required for running the algorithms and start the Django web server. If no port is specified, 
+  Django will start the web server on port 8000. 
 * To install requirements run `make pyreqs`.
     This is also done automatically when `make run` is called
 

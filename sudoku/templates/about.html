@@ -26,8 +26,10 @@
 
   <h3>Running the project</h3>
   <ul>
-    <p>To run this project, fork and clone the 
-    <a href="https://github.com/adamjenkins1/sudoku" target="new">git repository</a>, and type 
+    <p>To run this project, first fork and clone the 
+    <a href="https://github.com/adamjenkins1/sudoku" target="new">git repository</a>. To run this 
+    project locally, make sure to set <code>DEBUG = True</code> in <code>project/settings.py</code>,
+    otherwise the Django web server will not serve the required static files. Once that has been changed, type 
     <code>make run PORT=&lt;port&gt;</code>. This will compile the C++ program required for 
     running the algorithms and start the Django web server. If no port is specified, Django 
     will start the web server on port 8000. To install requirements run <code>make pyreqs</code>.
