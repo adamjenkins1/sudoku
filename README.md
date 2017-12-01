@@ -21,17 +21,19 @@
 
 ## The Algorithms
 * [AC-3][ac3 wiki]
+* [Genetic][genetic wiki]
 
 ## Authors
-* [Adam Jenkins][adam github]
-* [Alexander Corley][xandy github]
 * [Caleb Alexander][caleb github]
+* [Alexander Corley][xandy github]
+* [Adam Jenkins][adam github]
 
 [adam github]:	https://github.com/adamjenkins1
 [xandy github]:	https://github.com/archer31
 [caleb github]:	https://github.com/calexander13
 
 [ac3 wiki]: https://en.wikipedia.org/wiki/AC-3_algorithm
+[genetic wiki]: https://en.wikipedia.org/wiki/Genetic_algorithm
 [sudokuJS link]: https://github.com/pocketjoso/sudokuJS
 [sudoku link]: https://en.wikipedia.org/wiki/Sudoku
 [jquery link]: https://jquery.com/
