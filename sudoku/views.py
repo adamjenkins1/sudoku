@@ -31,7 +31,8 @@ def about(request):
 
 def stats(request):
     selected = 'stats'
-    data = SudokuData.objects.all().order_by('algorithm', '-size')
+    #data = SudokuData.objects.all().order_by('algorithm', '-size')
+    data = SudokuData.objects.all().order_by('-id')
     return render(request, 'stats.html', {'selected': selected, 'data': data})
 
 def data(request):
@@ -65,7 +66,7 @@ def solve(request, algorithm, difficulty):
     start = time()
     p = subprocess.Popen([staticPath + 'c++/solver', algorithm, str(boardSize), tempfilePath], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     real = time() - start
-    print(real)
+    #print(real)
     out, error = p.communicate()
     error = error.decode()[:-1]
 
@@ -75,7 +76,7 @@ def solve(request, algorithm, difficulty):
 
     out = out.decode()[:-2]
     solved = out[0]
-    print(out)
+    #print(out)
 
     solvedBoard = out[1:]
     solvedBoard = solvedBoard.strip()
