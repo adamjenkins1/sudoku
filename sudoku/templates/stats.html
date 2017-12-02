@@ -6,6 +6,8 @@
 
 <div class="container" id="app">
   <h3>Relevant Statistics</h3>
+  <canvas id="canvas" style="height: 400px; 100%;"></canvas>
+  <br>
   <table class="table">
     <thead>
       <tr>
@@ -31,7 +33,8 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/vue.js' %}"></script>
-<script src="{% static 'js/canvasjs.min.js' %}"></script>
+<script src="{% static 'js/vue.min.js' %}"></script>
+<script src="{% static 'js/Chart.bundle.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/stats.js' %}"></script>
 {% endblock %}

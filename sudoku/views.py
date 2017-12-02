@@ -41,7 +41,7 @@ def data(request):
     return render(request, 'data.html')
 
 def jsonData(request):
-    data = SudokuData.objects.all().order_by('id')
+    data = SudokuData.objects.all().order_by('-id')
     dictionaries = {}
     dictionaries['rows'] = []
 
