@@ -3,6 +3,7 @@ var app = new Vue({
   el: '#app',
   data: {
     sudokuDataList: [],
+    numRows: Number,
   },
   mounted() {
     this.loadData();
@@ -17,6 +18,7 @@ var app = new Vue({
         this.sudokuDataList = response;
         var dataPointsAC3 = [];
         var dataPointsGenetic = [];
+        this.numRows = this.sudokuDataList.rows.length;
         for(var i = 0; i < this.sudokuDataList.rows.length; i++) {
           if(this.sudokuDataList.rows[i].algorithm == "AC3") {
             dataPointsAC3.push({
