@@ -81,7 +81,35 @@ var app = new Vue({
             },
           }
         });
-        //console.log(response);
+
+        var AC3Time = dataPointsAC3.map(e => e.y);
+        var geneticTime = dataPointsGenetic.map(e => e.y);
+
+        var geneticBox = {
+          y: geneticTime,
+          name: 'Genetic',
+          type: 'box'
+        };
+
+        var AC3Box = {
+          y: AC3Time,
+          name: 'AC3',
+          type: 'box'
+        };
+
+        var layout = {
+          title: 'Algorithms vs Time (ms)',
+          xaxis: {
+            title: 'Algorithms Implemented',
+          },
+          yaxis: {
+            title: 'Time (ms)',
+          },
+        };
+
+        var data = [AC3Box, geneticBox];
+        Plotly.newPlot('box', data, layout);
+
       }.bind(this));
     }
   }
