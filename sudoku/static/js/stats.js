@@ -22,14 +22,14 @@ var app = new Vue({
         for(var i = 0; i < this.sudokuDataList.rows.length; i++) {
           if(this.sudokuDataList.rows[i].algorithm == "AC3") {
             dataPointsAC3.push({
-              x: this.sudokuDataList.rows[i].time,
-              y: this.sudokuDataList.rows[i].size
+              x: this.sudokuDataList.rows[i].size,
+              y: this.sudokuDataList.rows[i].time
             });
           }
           else if(this.sudokuDataList.rows[i].algorithm == "Genetic") {
             dataPointsGenetic.push({
-              x: this.sudokuDataList.rows[i].time,
-              y: this.sudokuDataList.rows[i].size
+              x: this.sudokuDataList.rows[i].size,
+              y: this.sudokuDataList.rows[i].time
             });
           }
         }
@@ -54,22 +54,22 @@ var app = new Vue({
           options: {
             scales: {
               xAxes: [{
-                type: 'linear',
-                position: 'bottom',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Time (ms)',
-                  fontSize: 15
-                }
-              }],
-              yAxes: [{
                 ticks: {
                   min: 4,
                   max: 16,
                 },
+                type: 'linear',
+                position: 'bottom',
                 scaleLabel: {
                   display: true,
                   labelString: 'Board Size',
+                  fontSize: 15
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Time (ms)',
                   fontSize: 15
                 }
               }]
@@ -77,7 +77,7 @@ var app = new Vue({
             title: {
               display: true,
               fontSize: 25,
-              text: 'Time vs Board Size'
+              text: 'Board Size vs Time'
             },
           }
         });
