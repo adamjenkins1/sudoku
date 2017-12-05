@@ -134,6 +134,7 @@ window.chartColors = {
 
 	// Google Analytics
 	/* eslint-disable */
+  /*
 	if (document.location.hostname.match(/^(www\.)?chartjs\.org$/)) {
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -142,6 +143,7 @@ window.chartColors = {
 		ga('create', 'UA-28909194-3', 'auto');
 		ga('send', 'pageview');
 	}
+  */
 	/* eslint-enable */
 
 }(this));

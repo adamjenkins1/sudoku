@@ -18,7 +18,7 @@ var app = new Vue({
         this.sudokuDataList = response;
         this.numRows = this.sudokuDataList.rows.length;
         var dataPointsAC3 = this.sudokuDataList.rows.filter(function(e) {
-          return e.algorithm == "AC3";
+          return e.algorithm == 'AC3';
         }).map(function(e) {
           return {
               x: e.size,
@@ -27,7 +27,16 @@ var app = new Vue({
         });
 
         var dataPointsGenetic = this.sudokuDataList.rows.filter(function(e) {
-          return e.algorithm == "Genetic";
+          return e.algorithm == 'Genetic';
+        }).map(function(e) {
+          return {
+              x: e.size,
+              y: e.time
+          };
+        });
+
+        var dataPointsHill = this.sudokuDataList.rows.filter(function(e) {
+          return e.algorithm == 'Hill Climbing';
         }).map(function(e) {
           return {
               x: e.size,
@@ -43,14 +52,19 @@ var app = new Vue({
           data: {
             datasets: [{
               label: 'AC3',
-              borderColor: window.chartColors.red,
-              backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+              borderColor: 'rgb(255, 65, 54)',
+              backgroundColor: color('rgb(255, 65, 54)').alpha(0.2).rgbString(),
               data: dataPointsAC3
             }, {
               label: 'Genetic',
               borderColor: window.chartColors.blue,
               backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
               data: dataPointsGenetic
+            }, {
+              label: 'Hill Climbing',
+              borderColor: 'rgb(0, 128, 0)',
+              backgroundColor: color('rgb(0, 128, 0)').alpha(0.2).rgbString(),
+              data: dataPointsHill
             }]
           },
           options: {
@@ -90,12 +104,18 @@ var app = new Vue({
         var geneticTime = dataPointsGenetic.map(e => e.y);
         var geneticX = dataPointsGenetic.map(e => e.x);
 
+        var hillTime = dataPointsHill.map(e => e.y);
+        var hillX = dataPointsHill.map(e => e.x);
+
         
 
         var geneticBox = {
           x: geneticX,
           y: geneticTime,
           name: 'Genetic',
+          marker: {
+            color: 'rgb(54, 162, 235)'
+          },
           boxmean: true,
           type: 'box',
           orientation: 'v'
@@ -105,6 +125,21 @@ var app = new Vue({
           x: AC3X,
           y: AC3Time,
           name: 'AC3',
+          marker: {
+            color: 'rgb(255, 65, 54)'
+          },
+          boxmean: true,
+          type: 'box',
+          orientation: 'v'
+        };
+
+        var hillBox = {
+          x: hillX,
+          y: hillTime,
+          name: 'Hill Climbing',
+          marker: {
+            color: 'rgb(0, 128, 0)'
+          },
           boxmean: true,
           type: 'box',
           orientation: 'v'
@@ -121,7 +156,7 @@ var app = new Vue({
           boxmode: 'group'
         };
 
-        var data = [AC3Box, geneticBox];
+        var data = [AC3Box, geneticBox, hillBox];
         Plotly.newPlot('box', data, layout);
 
       }.bind(this));

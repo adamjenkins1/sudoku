@@ -75,7 +75,7 @@ def solve(request, algorithm, difficulty):
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
 
-    if(algorithm != 'AC3' and algorithm != 'Genetic'):
+    if(algorithm != 'AC3' and algorithm != 'Genetic' and algorithm != 'Hill'):
         return HttpResponse('Chosen algorithm not in supported algorithms', status = '400')
 
     start = time()
@@ -91,7 +91,7 @@ def solve(request, algorithm, difficulty):
 
     out = out.decode()[:-2]
     solved = out[0]
-    #print(out)
+    print(out)
 
     solvedBoard = out[1:]
     solvedBoard = solvedBoard.strip()
@@ -99,7 +99,7 @@ def solve(request, algorithm, difficulty):
     solvedBoard = list(map(int, solvedBoard))
     solvedBoardJson = json.dumps(solvedBoard)
 
-    if(out[0] != '1'):
+    if(solved != '1'):
         return HttpResponse(solvedBoardJson, content_type = 'application/json', status = '400')
 
     newRow = SudokuData()
