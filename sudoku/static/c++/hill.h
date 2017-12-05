@@ -9,7 +9,7 @@
 
 class Hill {
   public:
-    static const int MAX_RETRIES = 15;
+    static const int MAX_RETRIES = 100;
     Hill(const Board&);
     friend std::ostream& operator<<(std::ostream&, const Hill&);
     bool solve();

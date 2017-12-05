@@ -50,7 +50,8 @@ bool Hill::solve() {
     if (fin.H < best.H)
       best = fin;
   }
-  fin = best;
+  if (fin > best)
+    fin = best;
   return fin.H == 0;
 }
 
