@@ -27,6 +27,11 @@ $('#algorithm-genetic').on('click', function() {
   algorithm = "Genetic";
 });
 
+$('#algorithm-hill').on('click', function() {
+  $(this).parent().siblings().removeClass('active').end().addClass('active');
+  algorithm = "Hill";
+});
+
 function tryGeneratingBoard() {
   // size = {4, 9, 16}
   // difficulty = {"easy", "medium", "hard", "very hard"}
@@ -84,10 +89,16 @@ function tryGeneratingBoard() {
         $('#solveButton').hide();
       })
     .fail(function(xhr, status, error) {
-      console.log(xhr);
       if(xhr.status == 400) {
         mySudokuJS.setBoard(xhr.responseJSON);
-        alert('Error: solver unable to find solution using ' + algorithm + ' algorithm.');
+        msg = '';
+        if(algorithm == 'Hill') {
+          msg = 'Error: solver unable to find solution using hill climbing algorithm.';
+        }
+        else if(algorithm == 'AC3' || algorithm == 'Genetic') {
+          msg = 'Error: solver unable to find solution using ' + algorithm + ' algorithm.';
+        }
+        alert(msg);
         $('#refreshButton').show();
         $('#solveButton').hide();
       }

@@ -10,20 +10,26 @@ class SudokuData(models.Model):
     return self.algorithm + ', ' + str(self.size)
 
   def as_dict(self):
-    longDiff = ""
+    longDiff = ''
+    alg = ''
     if(self.difficulty == 'e'):
-      longDiff = "easy"
+      longDiff = 'easy'
     elif(self.difficulty == 'm'):
-      longDiff = "medium"
+      longDiff = 'medium'
     elif(self.difficulty == 'h'):
-      longDiff = "hard"
+      longDiff = 'hard'
     elif(self.difficulty == 'vh'):
-      longDiff = "very hard"
+      longDiff = 'very hard'
+
+    if(self.algorithm == 'Hill'):
+      alg = 'Hill Climbing'
+    else:
+      alg = self.algorithm
 
     return {
-        "id": self.id,
-        "size": self.size,
-        "difficulty": longDiff,
-        "algorithm": self.algorithm,
-        "time": self.time,
+        'id': self.id,
+        'size': self.size,
+        'difficulty': longDiff,
+        'algorithm': alg,
+        'time': self.time,
         }
