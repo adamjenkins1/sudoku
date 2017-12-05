@@ -20,13 +20,16 @@
   <ul>
     <p>All that is required to run this web app is 
     <a href="https://www.python.org/downloads/" target="new">Python 3</a>, 
-    <a href="https://www.djangoproject.com/" target="new">Django</a> &gt;= 1.11.5, g++, and make.</p>
+    <a href="https://www.djangoproject.com/" target="new">Django</a> &gt;= 1.11.5, g++, and make. 
+      It is also important to have . (current directory) in your PATH.</p>
   </ul>
 
   <h3>Running the project</h3>
   <ul>
-    <p>To run this project, fork and clone the 
-    <a href="https://github.com/adamjenkins1/sudoku" target="new">git repository</a>, and type 
+    <p>To run this project, first fork and clone the 
+    <a href="https://github.com/adamjenkins1/sudoku" target="new">git repository</a>. To run this 
+    project locally, make sure to set <code>DEBUG = True</code> in <code>project/settings.py</code>,
+    otherwise the Django web server will not serve the required static files. Once that has been changed, type 
     <code>make run PORT=&lt;port&gt;</code>. This will compile the C++ program required for 
     running the algorithms and start the Django web server. If no port is specified, Django 
     will start the web server on port 8000. To install requirements run <code>make pyreqs</code>.
@@ -35,14 +38,15 @@
 
   <h3>The Algorithms</h3>
   <ul>
-    <a href="https://en.wikipedia.org/wiki/AC-3_algorithm" target="new">AC-3</a>
+    <a href="https://en.wikipedia.org/wiki/AC-3_algorithm" target="new">AC-3</a><br>
+    <a href="https://en.wikipedia.org/wiki/Genetic_algorithm" target="new">Genetic</a>
   </ul>
 
   <h3>Authors</h3>
   <ul>
-    <a href="https://github.com/adamjenkins1" target="new">Adam Jenkins</a><br>
-    <a href="https://github.com/archer31" target="new">Alexander Corley</a><br>
     <a href="https://github.com/calexander13" target="new">Caleb Alexander</a><br>
+    <a href="https://github.com/archer31" target="new">Alexander Corley</a><br>
+    <a href="https://github.com/adamjenkins1" target="new">Adam Jenkins</a><br>
   </ul>
 </div> <!-- /container -->
 

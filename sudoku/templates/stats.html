@@ -4,8 +4,41 @@
 {% block title %}Statistics{% endblock %}
 {% block content %}
 
-<div class="container">
-  <h3>Some cool R stuff will go here</h3>
+<div class="container" id="app">
+  <h3>Relevant Statistics</h3>
+  <canvas id="canvas" style="height: 400px; 100%;"></canvas>
+  <br>
+  <div id="box"></div>
+  <br>
+  {% verbatim %}
+  <p>Total number of rows = {{numRows}}</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Algorithm</th>
+        <th scope="col">Size</th>
+        <th scope="col">Difficulty</th>
+        <th scope="col">Execution time (ms)</th>
+      </tr>
+    </thead>
+    <tbody v-for="row in sudokuDataList">
+      <tr v-for="r in row">
+        <td>{{r.algorithm}}</td>
+        <td>{{r.size}}</td>
+        <td>{{r.difficulty}}</td>
+        <td>{{r.time}}</td>
+      </tr>
+      {% endverbatim %}
+    </tbody>
+  </table>
 </div> <!-- /container -->
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/vue.min.js' %}"></script>
+<script src="{% static 'js/Chart.bundle.min.js' %}"></script>
+<script src="{% static 'js/plotly-latest.min.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+<script src="{% static 'js/stats.js' %}"></script>
 {% endblock %}

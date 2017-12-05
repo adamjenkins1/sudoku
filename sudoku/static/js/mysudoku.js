@@ -74,7 +74,8 @@ function tryGeneratingBoard() {
       }
     }
 
-    $.post("/solve/" + algorithm + "/", {board: arrayBoard})
+    var url = "/solve/" + algorithm + "/" + shortDiff + "/";
+    $.post(url, {board: arrayBoard})
       .done(function(result) {
         console.log(arrayBoard);
         console.log(result);

@@ -112,3 +112,5 @@ ENV/
 *.swp
 tempgrid
 data/
+*.yaml
+db.sqlite3
