@@ -32,9 +32,6 @@ def about(request):
 
 def stats(request):
     selected = 'stats'
-    #data = SudokuData.objects.all().order_by('algorithm', '-size')
-    #data = SudokuData.objects.all().order_by('-id')
-    #return render(request, 'stats.html', {'selected': selected, 'data': data})
     return render(request, 'stats.html', {'selected': selected})
 
 def data(request):
@@ -91,7 +88,7 @@ def solve(request, algorithm, difficulty):
 
     out = out.decode()[:-2]
     solved = out[0]
-    print(out)
+    #print(out)
 
     solvedBoard = out[1:]
     solvedBoard = solvedBoard.strip()
