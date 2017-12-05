@@ -9,8 +9,7 @@
 
 ## Requirements
 * All that is required to run this web app is [Python 3][python link], 
-    [Django][django link] >= 1.11.5, g++, and make. It is also import to have . 
-    (current directory) in your PATH.
+    [Django][django link] >= 1.11.5, g++, and make.
 
 ## Running the project
 * To run this project, first fork and clone the git repository. To run this project locally, make sure to set 
