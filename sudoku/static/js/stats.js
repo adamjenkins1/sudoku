@@ -85,37 +85,37 @@ var app = new Vue({
         });
 
         var AC3Time = dataPointsAC3.map(e => e.y);
-        var AC3Y = dataPointsAC3.map(e => e.x);
+        var AC3X = dataPointsAC3.map(e => e.x);
 
         var geneticTime = dataPointsGenetic.map(e => e.y);
-        var geneticY = dataPointsGenetic.map(e => e.x);
+        var geneticX = dataPointsGenetic.map(e => e.x);
 
         
 
         var geneticBox = {
-          x: geneticTime,
-          y: geneticY,
+          x: geneticX,
+          y: geneticTime,
           name: 'Genetic',
           boxmean: true,
           type: 'box',
-          orientation: 'h'
+          orientation: 'v'
         };
 
         var AC3Box = {
-          x: AC3Time,
-          y: AC3Y,
+          x: AC3X,
+          y: AC3Time,
           name: 'AC3',
           boxmean: true,
           type: 'box',
-          orientation: 'h'
+          orientation: 'v'
         };
 
         var layout = {
-          title: 'Algorithms vs Time (ms)',
-          xaxis: {
+          title: 'Board Size vs Time (ms) by Algorithm',
+          yaxis: {
             title: 'Time (ms)',
           },
-          yaxis: {
+          xaxis: {
             title: 'Board Size',
           },
           boxmode: 'group'
