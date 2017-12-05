@@ -16,23 +16,25 @@ var app = new Vue({
     loadData: function () {
       $.get('/jsondata', function (response) {
         this.sudokuDataList = response;
-        var dataPointsAC3 = [];
-        var dataPointsGenetic = [];
         this.numRows = this.sudokuDataList.rows.length;
-        for(var i = 0; i < this.sudokuDataList.rows.length; i++) {
-          if(this.sudokuDataList.rows[i].algorithm == "AC3") {
-            dataPointsAC3.push({
-              x: this.sudokuDataList.rows[i].size,
-              y: this.sudokuDataList.rows[i].time
-            });
-          }
-          else if(this.sudokuDataList.rows[i].algorithm == "Genetic") {
-            dataPointsGenetic.push({
-              x: this.sudokuDataList.rows[i].size,
-              y: this.sudokuDataList.rows[i].time
-            });
-          }
-        }
+        var dataPointsAC3 = this.sudokuDataList.rows.filter(function(e) {
+          return e.algorithm == "AC3";
+        }).map(function(e) {
+          return {
+              x: e.size,
+              y: e.time
+          };
+        });
+
+        var dataPointsGenetic = this.sudokuDataList.rows.filter(function(e) {
+          return e.algorithm == "Genetic";
+        }).map(function(e) {
+          return {
+              x: e.size,
+              y: e.time
+          };
+        });
+
         Chart.defaults.global.animation.duration = 0;
         var color = Chart.helpers.color;
         var ctx = document.getElementById("canvas").getContext("2d");
@@ -83,28 +85,40 @@ var app = new Vue({
         });
 
         var AC3Time = dataPointsAC3.map(e => e.y);
+        var AC3Y = dataPointsAC3.map(e => e.x);
+
         var geneticTime = dataPointsGenetic.map(e => e.y);
+        var geneticY = dataPointsGenetic.map(e => e.x);
+
+        
 
         var geneticBox = {
-          y: geneticTime,
+          x: geneticTime,
+          y: geneticY,
           name: 'Genetic',
-          type: 'box'
+          boxmean: true,
+          type: 'box',
+          orientation: 'h'
         };
 
         var AC3Box = {
-          y: AC3Time,
+          x: AC3Time,
+          y: AC3Y,
           name: 'AC3',
-          type: 'box'
+          boxmean: true,
+          type: 'box',
+          orientation: 'h'
         };
 
         var layout = {
           title: 'Algorithms vs Time (ms)',
           xaxis: {
-            title: 'Algorithms Implemented',
-          },
-          yaxis: {
             title: 'Time (ms)',
           },
+          yaxis: {
+            title: 'Board Size',
+          },
+          boxmode: 'group'
         };
 
         var data = [AC3Box, geneticBox];
