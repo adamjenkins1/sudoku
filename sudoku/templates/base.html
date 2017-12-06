@@ -35,9 +35,19 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Algorithm<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#" id="algorithm-ac3">AC3</a></li>
-                <li><a href="#" id="algorithm-genetic">Genetic</a></li>
-                <li><a href="#" id="algorithm-hill">Hill Climbing</a></li>
+                {% if algorithm == 'AC3' %}
+                <li class = "active"><a href="/{{boardSize}}/{{shortDifficulty}}/AC3">AC3</a></li>
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/Genetic">Genetic</a></li>
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/Hill">Hill Climbing</a></li>
+                {% elif algorithm == 'Genetic' %}
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/AC3">AC3</a></li>
+                <li class="active"><a href="/{{boardSize}}/{{shortDifficulty}}/Genetic">Genetic</a></li>
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/Hill">Hill Climbing</a></li>
+                {% elif algorithm == 'Hill' %}
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/AC3">AC3</a></li>
+                <li><a href="/{{boardSize}}/{{shortDifficulty}}/Genetic">Genetic</a></li>
+                <li class="active"><a href="/{{boardSize}}/{{shortDifficulty}}/Hill">Hill Climbing</a></li>
+                {% endif %}
               </ul>
             </li>
             <li class="dropdown">
@@ -45,15 +55,15 @@
               <ul class="dropdown-menu">
                 {% if boardSize == '4' %}
                 <li class="active"><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
-                <li><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
-                <li><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                <li><a href="/9/{{shortDifficulty}}/{{algorithm}}">Medium (9x9)</a></li>
+                <li><a href="/16/{{shortDifficulty}}/{{algorithm}}">Large (16x16)</a></li>
                 {% elif boardSize == '9' %}
-                <li><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
+                <li><a href="/4/{{shortDifficulty}}/{{algorithm}}">Small (4x4)</a></li>
                 <li class="active"><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
-                <li><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                <li><a href="/16/{{shortDifficulty}}/{{algorithm}}">Large (16x16)</a></li>
                 {% elif boardSize == '16' %}
-                <li><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
-                <li><a href="/9/{{shortDifficulty}}">Medium (9x9)</a></li>
+                <li><a href="/4/{{shortDifficulty}}/{{algorithm}}">Small (4x4)</a></li>
+                <li><a href="/9/{{shortDifficulty}}/{{algorithm}}">Medium (9x9)</a></li>
                 <li class="active"><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
                 {% endif %}
               </ul>
@@ -62,25 +72,25 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Difficulty <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 {% if shortDifficulty == 'e' %}
-                <li class="active"><a href="/{{boardSize}}/e">Easy</a></li>
-                <li><a href="/{{boardSize}}/m">Medium</a></li>
-                <li><a href="/{{boardSize}}/h">Hard</a></li>
-                <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                <li class="active"><a href="/{{boardSize}}/e/{{algorithm}}">Easy</a></li>
+                <li><a href="/{{boardSize}}/m/{{algorithm}}">Medium</a></li>
+                <li><a href="/{{boardSize}}/h/{{algorithm}}">Hard</a></li>
+                <li><a href="/{{boardSize}}/vh/{{algorithm}}">Very Hard</a></li>
                 {% elif shortDifficulty == 'm' %}
-                <li><a href="/{{boardSize}}/e">Easy</a></li>
-                <li class="active"><a href="/{{boardSize}}/m">Medium</a></li>
-                <li><a href="/{{boardSize}}/h">Hard</a></li>
-                <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                <li><a href="/{{boardSize}}/e/{{algorithm}}">Easy</a></li>
+                <li class="active"><a href="/{{boardSize}}/m/{{algorithm}}">Medium</a></li>
+                <li><a href="/{{boardSize}}/h/{{algorithm}}">Hard</a></li>
+                <li><a href="/{{boardSize}}/vh/{{algorithm}}">Very Hard</a></li>
                 {% elif shortDifficulty == 'h' %}
-                <li><a href="/{{boardSize}}/e">Easy</a></li>
-                <li><a href="/{{boardSize}}/m">Medium</a></li>
-                <li class="active"><a href="/{{boardSize}}/h">Hard</a></li>
-                <li><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                <li><a href="/{{boardSize}}/e/{{algorithm}}">Easy</a></li>
+                <li><a href="/{{boardSize}}/m/{{algorithm}}">Medium</a></li>
+                <li class="active"><a href="/{{boardSize}}/h/{{algorithm}}">Hard</a></li>
+                <li><a href="/{{boardSize}}/vh/{{algorithm}}">Very Hard</a></li>
                 {% elif shortDifficulty == 'vh' %}
-                <li><a href="/{{boardSize}}/e">Easy</a></li>
-                <li><a href="/{{boardSize}}/m">Medium</a></li>
-                <li><a href="/{{boardSize}}/h">Hard</a></li>
-                <li class="active"><a href="/{{boardSize}}/vh">Very Hard</a></li>
+                <li><a href="/{{boardSize}}/e/{{algorithm}}">Easy</a></li>
+                <li><a href="/{{boardSize}}/m/{{algorithm}}">Medium</a></li>
+                <li><a href="/{{boardSize}}/h/{{algorithm}}">Hard</a></li>
+                <li class="active"><a href="/{{boardSize}}/vh/{{algorithm}}">Very Hard</a></li>
                 {% endif %}
               </ul>
             </li>

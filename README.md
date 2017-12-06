@@ -23,6 +23,7 @@
 ## The Algorithms
 * [AC-3][ac3 wiki]
 * [Genetic][genetic wiki]
+* [Hill Climbing][hill wiki]
 
 ## Authors
 * [Caleb Alexander][caleb github]
@@ -35,6 +36,7 @@
 
 [ac3 wiki]: https://en.wikipedia.org/wiki/AC-3_algorithm
 [genetic wiki]: https://en.wikipedia.org/wiki/Genetic_algorithm
+[hill wiki]: https://en.wikipedia.org/wiki/Hill_climbing
 [sudokuJS link]: https://github.com/pocketjoso/sudokuJS
 [sudoku link]: https://en.wikipedia.org/wiki/Sudoku
 [jquery link]: https://jquery.com/

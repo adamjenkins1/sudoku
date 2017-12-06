@@ -4,7 +4,7 @@ from .models import SudokuData
 import json, subprocess, os
 from time import strftime, gmtime, time
 
-def index(request, boardSize, diff):
+def index(request, boardSize, diff, algorithm):
     selected = 'home'
     difficulty = ''
     shortDifficulty = diff
@@ -24,7 +24,8 @@ def index(request, boardSize, diff):
         {'selected': selected, 
           'boardSize': boardSize, 
           'difficulty': difficulty,
-          'shortDifficulty': shortDifficulty})
+          'shortDifficulty': shortDifficulty,
+          'algorithm': algorithm})
 
 def about(request):
     selected = 'about'
