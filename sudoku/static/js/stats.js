@@ -71,7 +71,7 @@ var app = new Vue({
             scales: {
               xAxes: [{
                 ticks: {
-                  min: 4,
+                  min: 2,
                   max: 16,
                 },
                 type: 'linear',
