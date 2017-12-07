@@ -25,6 +25,7 @@ AC3::AC3(const Board& board)
       if (board.get(row, col) != 0) {
         var.domain.clear();
         var.domain.push_back(board.get(row, col));
+        continue;
       }
       std::vector<Edge> &cons = var.connections;
       int sqrt_size = std::sqrt(size);
