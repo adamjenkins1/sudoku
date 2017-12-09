@@ -71,7 +71,7 @@ var app = new Vue({
             scales: {
               xAxes: [{
                 ticks: {
-                  min: 2,
+                  min: 4,
                   max: 16,
                 },
                 type: 'linear',
@@ -83,6 +83,9 @@ var app = new Vue({
                 }
               }],
               yAxes: [{
+                ticks: {
+                  stepSize: 0.2
+                },
                 scaleLabel: {
                   display: true,
                   labelString: 'Time (ms)',
