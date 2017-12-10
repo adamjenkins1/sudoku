@@ -2,14 +2,15 @@
 
 ## About
 * This Django web app is designed to solve [Sudoku][sudoku link] puzzles and uses 
-    [sudokuJS][sudokuJS link], [jQuery][jquery link], and [Bootstrap][bootstrap link] for 
-    front end, and C++ in the back end to implement algorithms. Our application can solve 
-    and display Sudoku puzzles of sizes 4x4, 
-    9x9, and 16x16 with varying difficulties.  
+  [sudokuJS][sudokuJS link], [Vue.js][vuejs link], [jQuery][jquery link], 
+  and [Bootstrap][bootstrap link] for front end, and C++ in the back end to implement algorithms.
+  Our application can solve 
+  and display Sudoku puzzles of sizes 4x4, 9x9, and 16x16 with varying difficulties.  
+  Click [here][divc link] to see a live demo.
 
 ## Requirements
 * All that is required to run this web app is [Python 3][python link], 
-    [Django][django link] >= 1.11.5, g++, and make.
+  [Django][django link] >= 1.11.5, g++, and make.
 
 ## Running the project
 * To run this project, first fork and clone the git repository. To run this project locally, make sure to set 
@@ -43,3 +44,5 @@
 [bootstrap link]: https://getbootstrap.com/
 [python link]: https://www.python.org/downloads/
 [django link]: https://www.djangoproject.com/
+[divc link]: http://sudoku.divisionc.com
+[vuejs link]: https://vuejs.org/
