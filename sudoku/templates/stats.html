@@ -21,8 +21,8 @@
         <th scope="col">Execution time (ms)</th>
       </tr>
     </thead>
-    <tbody v-for="row in sudokuDataList">
-      <tr v-for="r in row">
+    <tbody>
+      <tr v-for="r in sudokuDataList">
         <td>{{r.algorithm}}</td>
         <td>{{r.size}}</td>
         <td>{{r.difficulty}}</td>

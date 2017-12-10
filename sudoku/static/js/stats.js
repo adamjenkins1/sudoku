@@ -16,8 +16,8 @@ var app = new Vue({
     loadData: function () {
       $.get('/jsondata', function (response) {
         this.sudokuDataList = response;
-        this.numRows = this.sudokuDataList.rows.length;
-        var dataPointsAC3 = this.sudokuDataList.rows.filter(function(e) {
+        this.numRows = this.sudokuDataList.length;
+        var dataPointsAC3 = this.sudokuDataList.filter(function(e) {
           return e.algorithm == 'AC3';
         }).map(function(e) {
           return {
@@ -26,7 +26,7 @@ var app = new Vue({
           };
         });
 
-        var dataPointsGenetic = this.sudokuDataList.rows.filter(function(e) {
+        var dataPointsGenetic = this.sudokuDataList.filter(function(e) {
           return e.algorithm == 'Genetic';
         }).map(function(e) {
           return {
@@ -35,7 +35,7 @@ var app = new Vue({
           };
         });
 
-        var dataPointsHill = this.sudokuDataList.rows.filter(function(e) {
+        var dataPointsHill = this.sudokuDataList.filter(function(e) {
           return e.algorithm == 'Hill Climbing';
         }).map(function(e) {
           return {

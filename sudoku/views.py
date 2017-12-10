@@ -40,15 +40,15 @@ def data(request):
 
 def jsonData(request):
     data = SudokuData.objects.all().order_by('-id')
-    dictionaries = {}
-    dictionaries['rows'] = []
+    dictionary = []
+    obj = {}
 
-    i = 0
     for row in data:
-        dictionaries['rows'].append(row.as_dict())
-        i += 1
+        obj = row.as_dict()
+        dictionary.append(obj)
 
-    return JsonResponse(dictionaries)
+    jsonObj = json.dumps(dictionary)
+    return HttpResponse(jsonObj, content_type = 'application/json')
     
 
 def saveData(request, boardSize, diff):
