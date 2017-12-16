@@ -54,7 +54,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Board Size <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 {% if boardSize == '4' %}
-                <li class="active"><a href="/4/{{shortDifficulty}}">Small (4x4)</a></li>
+                <li class="active"><a href="/4/{{shortDifficulty}}/{{algorithm}}">Small (4x4)</a></li>
                 <li><a href="/9/{{shortDifficulty}}/{{algorithm}}">Medium (9x9)</a></li>
                 <li><a href="/16/{{shortDifficulty}}/{{algorithm}}">Large (16x16)</a></li>
                 {% elif boardSize == '9' %}
@@ -64,7 +64,7 @@
                 {% elif boardSize == '16' %}
                 <li><a href="/4/{{shortDifficulty}}/{{algorithm}}">Small (4x4)</a></li>
                 <li><a href="/9/{{shortDifficulty}}/{{algorithm}}">Medium (9x9)</a></li>
-                <li class="active"><a href="/16/{{shortDifficulty}}">Large (16x16)</a></li>
+                <li class="active"><a href="/16/{{shortDifficulty}}/{{algorithm}}">Large (16x16)</a></li>
                 {% endif %}
               </ul>
             </li>
