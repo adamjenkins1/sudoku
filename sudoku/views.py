@@ -69,12 +69,14 @@ def solve(request, algorithm, difficulty):
     tempfilePath = dir_path + '/static/c++/tempgrid'
     staticPath = dir_path + '/static/'
 
+    if(request.method != 'POST' or len(initialBoard) == 0 or 
+        (algorithm != 'AC3' and algorithm != 'Genetic' and algorithm != 'Hill')):
+        return render(request, 'error.html', status = '400')
+
     with open(tempfilePath, 'w') as f:
         f.write(' '.join(initialBoard))
     boardSize = int((len(initialBoard))**(0.5))
 
-    if(algorithm != 'AC3' and algorithm != 'Genetic' and algorithm != 'Hill'):
-        return HttpResponse('Chosen algorithm not in supported algorithms', status = '400')
 
     start = time()
     p = subprocess.Popen([staticPath + 'c++/solver', algorithm, str(boardSize), tempfilePath], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
